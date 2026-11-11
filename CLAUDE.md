@@ -237,6 +237,15 @@ Points à trancher avec l'utilisateur au moment de la maquette :
 - Le site est en 0.1.0, qui n'a pas l'updater : la première version qui le
   contient (0.2.0, `dist/radio-audace-0.2.0.zip`) doit être téléversée à la
   main une dernière fois.
+- Leçon du 2026-11-11 : sur l'hébergement mutualisé OVH, l'API GitHub
+  répond « HTTP 403 » (60 requêtes par heure pour toute l'adresse IP,
+  partagée). Depuis la 0.2.1, l'updater lit donc l'adresse publique
+  `github.com/<dépôt>/releases/latest` (la redirection donne le numéro de
+  version) ; l'API n'est plus qu'un repli. La 0.2.0 installée sur le site a
+  encore l'ancien updater : la 0.2.1 doit être téléversée à la main.
+- Publier une release : la commande `./release.sh` est bloquée pour Claude
+  par le contrôle de sécurité (création d'une surface publique) ; c'est
+  l'utilisateur qui la lance (`! ./release.sh`).
 - Fait le 2026-11-11, avec l'accord de l'utilisateur : dépôt rendu public,
   release `v0.2.0` publiée (asset `radio-audace.zip` téléchargeable sans
   authentification, vérifié). Reste à vérifier sur le site une fois la 0.2.0
