@@ -8,6 +8,11 @@ Chaque section `## [X.Y.Z]` sert de notes à la release GitHub du même numéro
 
 ## [Non publié]
 
+## [0.2.4] - 2026-11-11
+
+### Ajouté
+- Pied de page : lien vers le compte X de la radio
+
 ## [0.2.3] - 2026-11-11
 
 ### Ajouté

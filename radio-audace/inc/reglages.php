@@ -35,6 +35,7 @@ function ra_station(): array {
         'reseaux'    => array(
             'WhatsApp' => '',
             'Facebook' => 'https://www.facebook.com/radioaudace',
+            'X'        => 'https://x.com/radio_audace',
             'YouTube'  => 'https://www.youtube.com/@radioaudace',
         ),
         'flux'       => ! empty( $rap['stream_url'] ) ? $rap['stream_url'] : 'https://stream.radio.audace.ovh/stream.mp3',

@@ -250,8 +250,8 @@ Points à trancher avec l'utilisateur au moment de la maquette :
   sans erreur 403 depuis la 0.2.1. **Mise à jour depuis WordPress validée
   de bout en bout** : l'utilisateur a installé la 0.2.2 par le lien « Mettre
   à jour maintenant ». Page Facebook fournie par l'utilisateur :
-  `https://www.facebook.com/radioaudace` (ajoutée dans la 0.2.3) ; le lien
-  WhatsApp reste à fournir.
+  `https://www.facebook.com/radioaudace` (ajoutée dans la 0.2.3) ; compte X :
+  `https://x.com/radio_audace` (0.2.4) ; le lien WhatsApp reste à fournir.
 - Publier une release : la commande `./release.sh` est bloquée pour Claude
   par le contrôle de sécurité (création d'une surface publique) ; c'est
   l'utilisateur qui la lance (`! ./release.sh`).

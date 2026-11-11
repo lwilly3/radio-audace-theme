@@ -12,7 +12,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Version : toujours identique à l'en-tête de style.css (release.sh le vérifie).
-define( 'RADIO_AUDACE_THEME_VERSION', '0.2.3' );
+define( 'RADIO_AUDACE_THEME_VERSION', '0.2.4' );
 
 require get_template_directory() . '/inc/reglages.php';   // Supports, scripts, coordonnées de la station.
 require get_template_directory() . '/inc/familles.php';   // Rubriques, émissions, replays.
