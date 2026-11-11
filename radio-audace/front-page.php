@@ -12,15 +12,17 @@ get_header();
 
 $station = ra_station();
 
-// La une : un article épinglé s'il y en a un, sinon le dernier article ayant une image.
-$une      = null;
-$epingles = array_filter( array_map( 'intval', (array) get_option( 'sticky_posts' ) ) );
+// La une : le dernier article ayant une image. Un article épinglé passe devant, à condition d'avoir une image lui aussi.
+// (Sur le site, presque tous les articles récents sont épinglés : l'épinglage seul ne désigne donc pas la une.)
+$une        = null;
+$avec_image = array( 'relation' => 'AND', ra_meta_articles(), array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' ) );
+$epingles   = array_filter( array_map( 'intval', (array) get_option( 'sticky_posts' ) ) );
 if ( $epingles ) {
-    $trouve = ra_articles( array( 'post__in' => $epingles, 'numberposts' => 1 ) );
+    $trouve = ra_articles( array( 'post__in' => $epingles, 'numberposts' => 1, 'meta_query' => $avec_image ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
     $une    = $trouve[0] ?? null;
 }
 if ( ! $une ) {
-    $trouve = ra_articles( array( 'numberposts' => 1, 'meta_query' => array( 'relation' => 'AND', ra_meta_articles(), array( 'key' => '_thumbnail_id', 'compare' => 'EXISTS' ) ) ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
+    $trouve = ra_articles( array( 'numberposts' => 1, 'meta_query' => $avec_image ) ); // phpcs:ignore WordPress.DB.SlowDBQuery
     $une    = $trouve[0] ?? null;
 }
 if ( ! $une ) {

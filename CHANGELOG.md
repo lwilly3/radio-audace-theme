@@ -8,6 +8,11 @@ Chaque section `## [X.Y.Z]` sert de notes à la release GitHub du même numéro
 
 ## [Non publié]
 
+## [0.2.1] - 2026-11-11
+
+### Corrigé
+- Accueil : la une est de nouveau le dernier article ayant une image. Presque tous les articles récents du site étant épinglés, un article sans image prenait la place
+
 ## [0.2.0] - 2026-11-11
 
 ### Ajouté
