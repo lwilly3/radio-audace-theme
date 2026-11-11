@@ -1,20 +1,22 @@
 <?php
 /**
- * Thème Radio Audace — squelette minimal, à construire après validation de la maquette.
+ * Thème Radio Audace.
+ *
+ * Le thème affiche des articles écrits dans RadioManager : il ne suppose aucune
+ * intervention dans l'éditeur WordPress. Tout ce qui dépend d'un plugin
+ * (grille, antenne, lecteur) se dégrade proprement si le plugin est absent.
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
     exit;
 }
 
-define( 'RADIO_AUDACE_THEME_VERSION', '0.1.0' );
+// Version : toujours identique à l'en-tête de style.css (release.sh le vérifie).
+define( 'RADIO_AUDACE_THEME_VERSION', '0.2.0' );
 
-add_action( 'after_setup_theme', function () {
-    add_theme_support( 'title-tag' );
-    add_theme_support( 'post-thumbnails' );
-    add_theme_support( 'html5', array( 'search-form', 'gallery', 'caption', 'style', 'script' ) );
-} );
-
-add_action( 'wp_enqueue_scripts', function () {
-    wp_enqueue_style( 'radio-audace', get_stylesheet_uri(), array(), RADIO_AUDACE_THEME_VERSION );
-} );
+require get_template_directory() . '/inc/reglages.php';   // Supports, scripts, coordonnées de la station.
+require get_template_directory() . '/inc/familles.php';   // Rubriques, émissions, replays.
+require get_template_directory() . '/inc/contenu.php';    // Nettoyage du HTML reçu de RadioManager et de Divi.
+require get_template_directory() . '/inc/antenne.php';    // Ce qui passe à l'antenne, grille.
+require get_template_directory() . '/inc/gabarits.php';   // Fragments d'affichage partagés.
+require get_template_directory() . '/inc/miseajour.php';  // Mises à jour depuis les releases GitHub.
