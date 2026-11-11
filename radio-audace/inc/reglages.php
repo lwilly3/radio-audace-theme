@@ -34,7 +34,7 @@ function ra_station(): array {
         'courriel'   => 'contact@audacemediagroup.com',
         'reseaux'    => array(
             'WhatsApp' => '',
-            'Facebook' => '',
+            'Facebook' => 'https://www.facebook.com/radioaudace',
             'YouTube'  => 'https://www.youtube.com/@radioaudace',
         ),
         'flux'       => ! empty( $rap['stream_url'] ) ? $rap['stream_url'] : 'https://stream.radio.audace.ovh/stream.mp3',
