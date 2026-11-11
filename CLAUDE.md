@@ -217,7 +217,8 @@ Points à trancher avec l'utilisateur au moment de la maquette :
 
 ## Dépôt et mises à jour
 
-- Dépôt GitHub `lwilly3/radio-audace-theme`, **privé** pour l'instant.
+- Dépôt GitHub `lwilly3/radio-audace-theme`, **public** depuis le 2026-11-11
+  (ne jamais y mettre de secret ni d'adresse personnelle).
 - Le site ne peut lire les releases que d'un dépôt **public** (leçon du
   plugin : dépôt privé = HTTP 404). Avant la première release, rendre ce
   dépôt public ou publier dans un dépôt miroir public.
@@ -236,9 +237,10 @@ Points à trancher avec l'utilisateur au moment de la maquette :
 - Le site est en 0.1.0, qui n'a pas l'updater : la première version qui le
   contient (0.2.0, `dist/radio-audace-0.2.0.zip`) doit être téléversée à la
   main une dernière fois.
-- **Aucune release n'existe encore, rien n'est commité depuis le commit
-  initial, et le dépôt est toujours privé** : ces trois actions attendent
-  l'accord de l'utilisateur.
+- Fait le 2026-11-11, avec l'accord de l'utilisateur : dépôt rendu public,
+  release `v0.2.0` publiée (asset `radio-audace.zip` téléchargeable sans
+  authentification, vérifié). Reste à vérifier sur le site une fois la 0.2.0
+  installée : l'accueil, puis une vraie mise à jour (la prochaine release).
 
 ## Arborescence
 
