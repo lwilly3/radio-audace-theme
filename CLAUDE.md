@@ -243,6 +243,12 @@ Points à trancher avec l'utilisateur au moment de la maquette :
   `github.com/<dépôt>/releases/latest` (la redirection donne le numéro de
   version) ; l'API n'est plus qu'un repli. La 0.2.0 installée sur le site a
   encore l'ancien updater : la 0.2.1 doit être téléversée à la main.
+- État au 2026-11-11 au soir : release `v0.2.2` publiée par l'utilisateur,
+  thème 0.2.2 en ligne sur la prod (capture de l'utilisateur : une avec
+  image, bloc « À l'antenne » avec la musique en cours et la liste des
+  émissions, lecteur en écoute). La vérification depuis WordPress répond
+  sans erreur 403 depuis la 0.2.1. Non confirmé : si la 0.2.2 a été
+  installée par le bouton de mise à jour de WordPress ou par téléversement.
 - Publier une release : la commande `./release.sh` est bloquée pour Claude
   par le contrôle de sécurité (création d'une surface publique) ; c'est
   l'utilisateur qui la lance (`! ./release.sh`).
