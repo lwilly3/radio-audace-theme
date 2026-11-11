@@ -52,6 +52,15 @@ class RA_Mise_A_Jour {
         if ( is_array( $cache ) ) {
             return $cache;
         }
+        $release = $this->release_publique();
+        if ( $release ) {
+            set_transient( self::CACHE, $release, self::DUREE );
+            return $release;
+        }
+        $premiere_erreur = $this->erreur;
+
+        // Repli : l'API de GitHub, qui donne aussi les notes de version mais refuse souvent (HTTP 403)
+        // les hébergements mutualisés, limités à 60 requêtes par heure pour toute l'adresse IP.
         $reponse = wp_remote_get( 'https://api.github.com/repos/' . self::depot() . '/releases/latest', array(
             'timeout' => 10,
             'headers' => array(
@@ -66,7 +75,7 @@ class RA_Mise_A_Jour {
         $code = (int) wp_remote_retrieve_response_code( $reponse );
         if ( 200 !== $code ) {
             // 404 : dépôt privé ou aucune release ; 403 : trop de requêtes.
-            $this->erreur = 'HTTP ' . $code;
+            $this->erreur = $premiere_erreur . ' ; API : HTTP ' . $code;
             return null;
         }
         $corps = json_decode( wp_remote_retrieve_body( $reponse ), true );
@@ -89,6 +98,41 @@ class RA_Mise_A_Jour {
         }
         set_transient( self::CACHE, $release, self::DUREE );
         return $release;
+    }
+
+    /**
+     * Dernière release lue par l'adresse publique de GitHub, sans passer par l'API.
+     *
+     * « /releases/latest » redirige vers « /releases/tag/vX.Y.Z » : le numéro de version est
+     * dans l'adresse de redirection, et l'adresse du paquet s'en déduit. Cette voie n'a pas
+     * de quota par adresse IP, contrairement à l'API.
+     */
+    private function release_publique(): ?array {
+        $base    = 'https://github.com/' . self::depot() . '/releases';
+        $reponse = wp_remote_head( $base . '/latest', array(
+            'timeout'     => 10,
+            'redirection' => 0,
+            'headers'     => array( 'User-Agent' => 'WordPress/' . get_bloginfo( 'version' ) . '; theme-radio-audace' ),
+        ) );
+        if ( is_wp_error( $reponse ) ) {
+            $this->erreur = $reponse->get_error_message();
+            return null;
+        }
+        $code   = (int) wp_remote_retrieve_response_code( $reponse );
+        $cible  = (string) wp_remote_retrieve_header( $reponse, 'location' );
+        if ( ! in_array( $code, array( 301, 302, 303, 307, 308 ), true ) || ! preg_match( '~/releases/tag/(v?\d+\.\d+\.\d+)$~', $cible, $m ) ) {
+            // 404 : dépôt privé. Redirection vers « /releases » : aucune release publiée.
+            $this->erreur = 'HTTP ' . $code . ( $cible ? ' (aucune release publiée)' : '' );
+            return null;
+        }
+        $this->erreur = '';
+        return array(
+            'tag_name'     => $m[1],
+            'html_url'     => $base . '/tag/' . $m[1],
+            'body'         => '',
+            'published_at' => '',
+            'paquet'       => $base . '/download/' . $m[1] . '/' . self::ASSET,
+        );
     }
 
     /** Annonce la nouvelle version à WordPress. */

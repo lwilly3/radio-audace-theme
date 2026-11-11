@@ -10,7 +10,11 @@ Chaque section `## [X.Y.Z]` sert de notes à la release GitHub du même numéro
 
 ## [0.2.1] - 2026-11-11
 
+### Ajouté
+- Aperçu du thème dans Apparence › Thèmes
+
 ### Corrigé
+- Mise à jour depuis WordPress : la vérification échouait avec « HTTP 403 ». Le thème lit désormais l'adresse publique des releases GitHub au lieu de l'API, limitée à 60 requêtes par heure pour toute l'adresse IP de l'hébergement mutualisé
 - Accueil : la une est de nouveau le dernier article ayant une image. Presque tous les articles récents du site étant épinglés, un article sans image prenait la place
 
 ## [0.2.0] - 2026-11-11
