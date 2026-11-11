@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="fr" data-direct="arret">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Société — Maquette de la page de rubrique</title>
+<!-- Maquette : polices chargées depuis Google Fonts. Dans le thème, elles seront hébergées localement (woff2). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600..800&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<header class="entete" data-courant="societe"></header>
+
+<main id="contenu">
+<!-- Page de rubrique, cas réel le plus difficile : Société n'a que deux articles, dont un sans image.
+       Les articles sont listés strictement par date, comme partout (octobre avant juillet, avec ou sans image) ; la suite est honnêtement séparée (« Ailleurs sur Radio Audace »), jamais mélangée. -->
+  <div class="cadre">
+    <header class="rubrique-tete societe">
+      <h1>Société</h1>
+      <p>Vie quotidienne, famille, droits : les sujets qui touchent chacun.</p>
+      <nav class="puces" aria-label="Sous-rubriques"><a href="#" aria-current="page">Tout</a><a href="#">Que dit la loi</a></nav>
+    </header>
+  </div>
+
+  <section class="section" style="padding-top:clamp(24px,3vw,40px)">
+    <div class="cadre">
+      <div class="grille deux">
+        <a class="carte sans-image apparait" href="article.html">
+          <span class="rubrique societe">Société</span>
+          <h3>Écrans, pornographie et intelligence artificielle : sommes-nous en train de perdre le goût des relations humaines ?</h3>
+          <p>Jamais nous n'avons disposé d'autant de moyens pour communiquer. Pourtant, il est possible de passer plusieurs heures par jour à échanger sur son téléphone tout en éprouvant un profond sentiment de solitude.</p>
+          <time class="date" datetime="2026-10-29">29 octobre 2026</time>
+        </a>
+        <a class="carte apparait" href="article.html">
+          <figure class="vignette"><img src="assets/article-2000.jpg" alt="" loading="lazy" width="1600" height="1066"></figure>
+          <span class="rubrique societe">Que dit la loi</span>
+          <h3>Concubinage, mariage coutumier et transcription au Cameroun : ce que dit réellement la loi de 2024</h3>
+          <time class="date" datetime="2026-07-10">10 juillet 2026</time>
+        </a>
+      </div>
+      <p class="note-fin">2 articles dans cette rubrique.</p>
+    </div>
+  </section>
+
+  <section class="section papier">
+    <div class="cadre">
+      <div class="section-tete"><h2>Ailleurs sur Radio Audace</h2><a class="lien" href="accueil.html">Tous les articles</a></div>
+      <div class="grille trois">
+        <a class="carte apparait" href="article.html">
+          <figure class="vignette"><img src="assets/article-2039.jpg" alt="" loading="lazy" width="1600" height="900"></figure>
+          <span class="rubrique economie">Économie</span>
+          <h3>SOCADEL : 100 jours après son installation, la nouvelle direction passe l'examen</h3>
+          <time class="date" datetime="2026-10-08">8 octobre 2026</time>
+        </a>
+        <a class="carte apparait" href="article.html">
+          <figure class="vignette"><img src="assets/article-2037.jpg" alt="" loading="lazy" width="1600" height="900"></figure>
+          <span class="rubrique economie">Économie</span>
+          <h3>CEMAC : plus de 10 500 milliards de FCFA de dette sur le marché régional, qu'est-ce que cela signifie ?</h3>
+          <time class="date" datetime="2026-09-17">17 septembre 2026</time>
+        </a>
+        <a class="carte apparait" href="article.html">
+          <figure class="vignette"><img src="assets/article-2033.jpg" alt="" loading="lazy" width="1600" height="900"></figure>
+          <span class="rubrique politique">Politique</span>
+          <h3>MRC vs MINAT : le bras de fer administratif qui fragilise l'opposition avant les élections</h3>
+          <time class="date" datetime="2026-08-27">27 août 2026</time>
+        </a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pied"></footer>
+
+<script src="maquette.js"></script>
+</body>
+</html>

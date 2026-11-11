@@ -1,0 +1,80 @@
+<!doctype html>
+<html lang="fr" data-direct="arret">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maquettes du thème Radio Audace — sommaire</title>
+<!-- Maquette : polices chargées depuis Google Fonts. Dans le thème, elles seront hébergées localement (woff2). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600..800&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<header class="entete" data-courant=""></header>
+
+<main id="contenu">
+<div class="sommaire">
+  <h1>Maquettes du thème Radio Audace</h1>
+  <p>Troisième passe, le 11 novembre 2026, après deux analyses critiques. Toutes les pages partagent le même en-tête, le même pied et le même lecteur du direct ; les contenus sont de vrais articles et épisodes du site.</p>
+
+  <h2>Les pages</h2>
+  <ul class="pages">
+    <li><a href="accueil.html"><b>Accueil</b><span>L'antenne et la une sur le premier écran, puis les articles par date, les émissions, les rubriques.</span><i>›</i></a></li>
+    <li><a href="article.html"><b>Article</b><span>Cas courant : image paysage, texte structuré, rappel d'émission sous la signature.</span><i>›</i></a></li>
+    <li><a href="article-cas-difficiles.html"><b>Article, cas difficiles</b><span>Image portrait, titre en capitales, h1 et balises vides dans le corps, citation longue, tableau.</span><i>›</i></a></li>
+    <li><a href="replay.html"><b>Replay vidéo</b><span>Le gabarit des 69 anciens articles : vidéo en tête, titre réécrit, autres épisodes.</span><i>›</i></a></li>
+    <li><a href="emission.html"><b>Page d'émission</b><span>Une page de programme : visuel, horaire, prochain rendez-vous, derniers épisodes.</span><i>›</i></a></li>
+    <li><a href="grille.html"><b>Grille</b><span>Le programme jour par jour, l'émission en cours mise en avant. Horaires simulés.</span><i>›</i></a></li>
+    <li><a href="rubrique.html"><b>Page de rubrique</b><span>Cas le plus difficile : une rubrique qui n'a que deux articles.</span><i>›</i></a></li>
+  </ul>
+
+  <h2>Ce qui a changé depuis la première version</h2>
+  <ul class="liste">
+    <li><strong>Le direct joue réellement</strong>, depuis l'en-tête, sans quitter la page. Un lecteur apparaît en bas d'écran avec ses états : connexion, écoute, pause, erreur. L'onde ne s'anime que lorsque le son joue.</li>
+    <li><strong>L'accueil commence par l'antenne</strong> : émission en cours et suite du programme à côté de la une. Le titre de une passe de 76 à 44 px, aligné à gauche, image visible d'emblée.</li>
+    <li><strong>L'en-tête tient sur une rangée</strong> à toutes les largeurs (60 px, 56 px sur téléphone). Sous 1140 px, le menu passe dans un tiroir : plus aucun lien tronqué. Émissions et Grille sont en tête du menu. Une recherche est ajoutée.</li>
+    <li><strong>Les images gardent leur format</strong> : dans l'article, le cadre épouse exactement l'image, sans recadrage ni bande ; une image portrait reçoit un cadre plus étroit et plus haut. Dans les listes, une image portrait est montrée entière sur un fond flouté d'elle-même.</li>
+    <li><strong>L'ouverture d'article est allégée</strong> : fil d'Ariane supprimé, titre réduit, signature sur une ligne, partage en haut avec WhatsApp en premier, rappel d'émission remonté sous la signature.</li>
+    <li><strong>Le corps encaisse le HTML réel</strong> : h1 traité comme un intertitre, balises vides masquées, citation longue distincte de l'exergue, h4, tableau et filet stylés, espaces insécables ajoutées.</li>
+    <li><strong>Les émissions ont un visage</strong> : visuel réel, une seule teinte au lieu de sept, flèches de défilement à la souris.</li>
+    <li><strong>Le pied</strong> : téléphone et courriel cliquables, réseaux sociaux, émissions listées, mentions légales, listes côte à côte sur téléphone.</li>
+    <li><strong>Cibles tactiles</strong> : plus aucun lien ou bouton sous 44 px sur écran tactile.</li>
+  </ul>
+
+  <h2>Ce qui passe réellement à l'antenne</h2>
+  <p>La grille dit ce qui est prévu ; le lecteur et les blocs « À l'antenne » doivent dire ce qui passe vraiment. Quatre cas, à ouvrir sur l'accueil (le choix est gardé d'une page à l'autre) :</p>
+  <ul class="pages">
+    <li><a href="accueil.html?antenne=emission"><b>Émission en direct</b><span>Un conducteur est en ligne dans RadioManager : nom de l'émission, heure de fin.</span><i>›</i></a></li>
+    <li><a href="accueil.html?antenne=musique"><b>Musique</b><span>Pas d'émission : titre et artiste envoyés par RadioDJ, puis la prochaine émission.</span><i>›</i></a></li>
+    <li><a href="accueil.html?antenne=rediffusion"><b>Rediffusion</b><span>Une émission enregistrée repasse : elle n'est jamais annoncée « en direct ».</span><i>›</i></a></li>
+    <li><a href="accueil.html?antenne=inconnu"><b>Aucune information</b><span>RadioManager ne répond pas : le lecteur dit seulement « Radio Audace », sans rien affirmer.</span><i>›</i></a></li>
+  </ul>
+
+  <h2>Ce qui est simulé dans la maquette</h2>
+  <ul class="liste">
+    <li><strong>Le logo est une proposition de version simplifiée</strong> : « RADIO AUDACE » redessiné en lettres pleines, « 106.8 FM » repris du logo d'origine, même bleu, même disposition. Le logo d'origine dessine « AUDACE » en lettres blanches à ombre bleue, illisible en petit sur fond clair. Fichier : assets/logo-radio-audace-simplifie.svg ; l'original n'est pas modifié.</li>
+    <li><strong>Tous les horaires sont simulés</strong> (émission en cours, à suivre, page de la grille). Dans le thème, ils viendront du plugin audace-analytics. Aujourd'hui, sur le staging, la grille est en mode « nouvelle saison » : le site réel n'afficherait donc que le bouton d'écoute et le message d'attente.</li>
+    <li><strong>Le rappel « Parlons Droit ! »</strong> de l'article est un exemple : sur le site, cet article n'est rattaché à aucune émission.</li>
+    <li><strong>Les visuels d'émission</strong> sont les visuels officiels de la saison 2021, repris de la chaîne YouTube, avec les présentateurs de l'époque. Ceux de la nouvelle saison viendront de RadioManager ; une émission sans visuel reçoit une vignette typographique.</li>
+    <li><strong>Les liens WhatsApp, Facebook et mentions légales</strong> ne mènent nulle part. Le lien YouTube est le vrai.</li>
+    <li><strong>Article sans image</strong> : aucun gabarit particulier, la figure disparaît et le texte suit la signature. Dans les listes, la carte devient typographique (visible sur l'accueil et la rubrique).</li>
+    <li><strong>Le son d'une page à l'autre</strong> : la maquette relance le direct à l'arrivée sur la page suivante. Dans le thème, la navigation se fera sans rechargement pour que le son ne s'interrompe pas.</li>
+  </ul>
+
+  <h2>Décisions attendues</h2>
+  <ul class="liste">
+    <li><strong>Logo</strong> : valider la version simplifiée proposée, ou la faire reprendre par un graphiste. Elle ne remplace le logo d'origine que sur le site.</li>
+    <li><strong>Lecteur persistant</strong> : navigation sans rechargement, ajoutée comme une couche sur un thème qui fonctionne sans elle (recommandé). Les boutons piloteront le lecteur du plugin Radio Audace Player, sans en créer un second.</li>
+    <li><strong>« Parlons Droit ! » ou « Parlons Droits ! »</strong> : le visuel de l'émission porte un « s », la catégorie du site non. Laquelle est la bonne ?</li>
+    <li><strong>Liens Facebook et WhatsApp de l'antenne</strong> : à fournir.</li>
+  </ul>
+</div>
+</main>
+
+<footer class="pied"></footer>
+
+<script src="maquette.js"></script>
+</body>
+</html>

@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr" data-direct="arret">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Radio Audace 106.8 FM — Maquette de l'accueil</title>
+<!-- Maquette : polices chargées depuis Google Fonts. Dans le thème, elles seront hébergées localement (woff2). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600..800&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<header class="entete" data-courant="accueil"></header>
+
+<main id="contenu">
+<h1 class="sr">Radio Audace 106.8 FM — le direct et l'actualité du Cameroun</h1>
+
+  <!-- Premier écran : l'antenne (ce qui change toutes les heures) à côté de la une.
+       Règle de la une : le dernier article publié ayant une image ; un article « épinglé » dans WordPress passe devant.
+       Personne n'a besoin d'ouvrir l'éditeur. -->
+  <section class="ouverture cadre" aria-label="À la une et à l'antenne">
+    <a class="une" href="article.html">
+      <figure class="vignette"><img src="assets/article-2039.jpg" alt="Le ministre de l'Eau et de l'Énergie s'exprime devant les micros, à Douala" width="1600" height="900" fetchpriority="high"></figure>
+      <span class="rubrique economie">Économie</span>
+      <h2 class="titre">SOCADEL : 100 jours après son installation, la nouvelle direction passe l'examen</h2>
+      <p class="chapeau">Réunie à Douala sous la présidence du ministre de l'Eau et de l'Énergie, Gaston Eloundou Essomba, la nouvelle équipe dirigeante de la Société camerounaise d'électricité a été soumise à une évaluation de sa feuille de route.</p>
+      <time class="date" datetime="2026-10-08">8 octobre 2026</time>
+    </a>
+
+    <!-- À l'antenne : piloté par la grille d'audace-analytics. Sans le plugin, le bloc n'affiche que « Radio Audace en direct » et le bouton. -->
+    <aside class="antenne" id="antenne" aria-label="À l'antenne">
+      <div class="bloc">
+        <span class="etiquette"><span class="pastille"></span>En direct · 106.8 FM</span>
+        <h2>Audace Info Midi Magazine</h2>
+        <p class="quoi">Jusqu'à 13 h 30</p>
+        <p class="desc">Politique, économie, culture, santé et sports, avec la parole aux experts.</p>
+      </div>
+      <div class="commandes">
+        <button class="lecture" type="button" data-direct-btn><span class="ico"></span><span class="libelle"></span></button>
+        <div class="onde" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+      <ul class="suite">
+        <li class="titre">À suivre</li>
+        <li><time>15 h</time><div><b>Le Club Audace</b><span>L'actualité sportive au quotidien</span></div></li>
+        <li><time>17 h</time><div><b>La Discothèque de Papa</b><span>Les hits 1980-2000</span></div></li>
+        <li><time>7 h</time><div><b>Le Train d'Audace</b><span>Demain · la matinale d'information</span></div></li>
+        <li><time>14 h</time><div><b>Parlons Droit !</b><span>Demain · vos droits, expliqués</span></div></li>
+      </ul>
+      <a class="vers-grille" href="grille.html">Toute la grille</a>
+    </aside>
+  </section>
+
+  <!-- Articles : strictement par date, le plus récent d'abord. Dates discrètes : le site publie environ trois articles par mois. -->
+  <section class="section">
+    <div class="cadre">
+      <div class="section-tete">
+        <div><h2>Nos décryptages</h2><p>Les sujets que la rédaction prend le temps d'expliquer.</p></div>
+        <a class="lien" href="rubrique.html">Tous les articles</a>
+      </div>
+      <div class="grille trois">
+        <a class="carte sans-image apparait" href="article.html">
+          <span class="rubrique societe">Société</span>
+          <h3>Écrans, pornographie et intelligence artificielle : sommes-nous en train de perdre le goût des relations humaines ?</h3>
+          <p>Jamais nous n'avons disposé d'autant de moyens pour communiquer. Pourtant, il est possible de passer plusieurs heures par jour à échanger sur son téléphone tout en éprouvant un profond sentiment de solitude.</p>
+          <time class="date" datetime="2026-10-29">29 octobre 2026</time>
+        </a>
+        <a class="carte apparait" href="article.html">
+          <figure class="vignette"><img src="assets/article-2037.jpg" alt="" loading="lazy" width="1600" height="900"></figure>
+          <span class="rubrique economie">Économie</span>
+          <h3>CEMAC : plus de 10 500 milliards de FCFA de dette sur le marché régional, qu'est-ce que cela signifie ?</h3>
+          <time class="date" datetime="2026-09-17">17 septembre 2026</time>
+        </a>
+        <a class="carte apparait" href="article.html">
+          <figure class="vignette"><img src="assets/article-2033.jpg" alt="" loading="lazy" width="1600" height="900"></figure>
+          <span class="rubrique politique">Politique</span>
+          <h3>MRC vs MINAT : le bras de fer administratif qui fragilise l'opposition avant les élections</h3>
+          <time class="date" datetime="2026-08-27">27 août 2026</time>
+        </a>
+        <a class="carte apparait" href="article.html">
+          <figure class="vignette"><img src="assets/article-2031.jpg" alt="" loading="lazy" width="1600" height="1067"></figure>
+          <span class="rubrique infos">Infos</span>
+          <h3>À Douala, la SCDP renforce ses capacités de stockage et sa logistique pétrolière</h3>
+          <time class="date" datetime="2026-08-21">21 août 2026</time>
+        </a>
+        <a class="carte apparait" href="article.html">
+          <figure class="vignette"><img src="assets/article-2026.jpg" alt="" loading="lazy" width="1600" height="1022"></figure>
+          <span class="rubrique culture">Culture</span>
+          <h3>The West Voice Music : quand la jeunesse fait entendre sa voix</h3>
+          <time class="date" datetime="2026-08-19">19 août 2026</time>
+        </a>
+        <a class="carte apparait" href="article-cas-difficiles.html">
+          <figure class="vignette entiere" style="--img:url(assets/article-2024.jpg)"><img src="assets/article-2024.jpg" alt="" loading="lazy" width="912" height="1600"></figure>
+          <span class="rubrique infos">Infos</span>
+          <h3>Incendie dévastateur au marché Foumi à New Bell : un bilan humain et matériel lourd</h3>
+          <time class="date" datetime="2026-08-19">19 août 2026</time>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- Les émissions : des programmes, avec un visuel (fourni par audace-analytics ; ici, images d'épisodes réels). -->
+  <section class="section papier" id="emissions">
+    <div class="cadre">
+      <div class="section-tete">
+        <div><h2>Les émissions</h2><p>Chaque rendez-vous de l'antenne, son horaire et ses derniers épisodes.</p></div>
+        <div class="droite"><a class="lien" href="grille.html">La grille complète</a><div class="fleches"><button type="button" aria-label="Émissions précédentes"></button><button type="button" aria-label="Émissions suivantes"></button></div></div>
+      </div>
+      <div class="defile"><div class="emissions">
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/yt-SGuig8sZzOk.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Lun – Ven · 7 h</span><h3>Le Train d'Audace</h3><p>La matinale d'information : rubriques, invités et la parole aux auditeurs.</p></div></a>
+        <a class="emission" href="emission.html"><div class="vignette sans-visuel" aria-hidden="true">Audace Info Midi Magazine</div><div class="txt"><span class="quand">Lun – Ven · 12 h</span><h3>Audace Info Midi Magazine</h3><p>Politique, économie, culture, santé et sports, avec la parole aux experts.</p></div></a>
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/yt-XF_svVTummI.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Lun – Ven · 15 h</span><h3>Le Club Audace</h3><p>La tribune qui décortique l'actualité sportive, scoops et analyses.</p></div></a>
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/yt-fqQl-u6G9Qc.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Jeudi · 14 h</span><h3>Parlons Droit !</h3><p>Droit pénal, civil, matrimonial : des acteurs reconnus répondent à vos questions.</p></div></a>
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/yt-4SZJ4qBOlyY.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Mercredi · 10 h</span><h3>Santé Magazine</h3><p>Santé et bien-être, avec les spécialistes qui répondent aux préoccupations.</p></div></a>
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/visuel-femmes-daudace.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Samedi · 10 h</span><h3>Femmes d'Audace</h3><p>Une tribune de promotion des compétences et du leadership au féminin.</p></div></a>
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/yt-psqWAWfNOYo.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Samedi · 12 h</span><h3>Bold Génération</h3><p>La vitrine du savoir-faire jeune et du patrimoine culturel camerounais.</p></div></a>
+      </div></div>
+    </div>
+  </section>
+
+  <!-- Les rubriques : une colonne par rubrique ayant au moins deux articles non affichés plus haut ; jamais complétée par une autre rubrique. -->
+  <section class="section">
+    <div class="cadre duo">
+      <div class="colonne infos">
+        <h2 class="tete">Infos <a class="lien" href="#">Tout voir</a></h2>
+        <a class="ligne" href="article.html">
+          <div><h3>Zamboi, le drame silencieux : 107 morts dans l'effondrement d'une mine d'or artisanale</h3><time class="date" datetime="2026-08-19">19 août 2026</time></div>
+          <figure class="vignette"><img src="assets/article-2022.jpg" alt="" loading="lazy" width="1600" height="1536"></figure>
+        </a>
+        <a class="ligne" href="article.html">
+          <div><h3>Jean Bonheur Tchouafa : quand la solidarité citoyenne prend le chemin de l'école</h3><time class="date" datetime="2026-08-19">19 août 2026</time></div>
+          <figure class="vignette"><img src="assets/article-2029.jpg" alt="" loading="lazy" width="1600" height="1016"></figure>
+        </a>
+      </div>
+      <div class="colonne sport">
+        <h2 class="tete">Sport <a class="lien" href="#">Tout voir</a></h2>
+        <a class="ligne" href="article.html">
+          <div><h3>Les Lionnes Indomptables au sommet : un parcours magique vers la finale de la CAN Féminine 2026</h3><time class="date" datetime="2026-08-14">14 août 2026</time></div>
+          <figure class="vignette"><img src="assets/article-2013.jpg" alt="" loading="lazy" width="1600" height="1015"></figure>
+        </a>
+        <a class="ligne" href="article.html">
+          <div><h3>Clément Niyigena quitte le Rwanda pour le championnat égyptien : Smouha SC officialise son transfert</h3><time class="date" datetime="2026-07-07">7 juillet 2026</time></div>
+          <figure class="vignette"><img src="assets/article-1993.jpg" alt="" loading="lazy" width="1600" height="1600"></figure>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="frequence">
+    <div class="cadre apparait">
+      <div class="chiffre">106.8<small>FM</small></div>
+      <div>
+        <p>Bien plus que l'info. Le direct, les émissions et l'actualité du Cameroun, à Douala et partout en ligne.</p>
+        <div class="boutons">
+          <a class="bouton" href="tel:+237223420949">Appeler l'antenne</a>
+          <a class="bouton clair" href="#">Recevoir la newsletter</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pied"></footer>
+
+<script src="maquette.js"></script>
+</body>
+</html>

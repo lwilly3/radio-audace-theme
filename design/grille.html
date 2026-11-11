@@ -1,0 +1,51 @@
+<!doctype html>
+<html lang="fr" data-direct="arret">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Grille des programmes — Maquette</title>
+<!-- Maquette : polices chargées depuis Google Fonts. Dans le thème, elles seront hébergées localement (woff2). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600..800&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<header class="entete" data-courant="grille"></header>
+
+<main id="contenu">
+<!-- Page de la grille : entièrement pilotée par l'option « audace_grille » d'audace-analytics
+       (nom, jours, début, fin, description, image, présentateurs). Horaires SIMULÉS ici.
+       Si RadioManager met la grille en mode « relance » (c'est le cas aujourd'hui sur le staging), la page n'affiche que le message du bas. -->
+  <div class="cadre">
+    <header class="rubrique-tete programme">
+      <h1>La grille</h1>
+      <p>Les rendez-vous de l'antenne, jour par jour. Heure de Douala.</p>
+      <nav class="jours" aria-label="Jour de la semaine">
+        <a href="#">Lun<small>9</small></a><a href="#">Mar<small>10</small></a><a href="#" aria-current="page">Mer<small>Aujourd'hui</small></a><a href="#">Jeu<small>12</small></a><a href="#">Ven<small>13</small></a><a href="#">Sam<small>14</small></a><a href="#">Dim<small>15</small></a>
+      </nav>
+    </header>
+  </div>
+  <section class="section" style="padding-top:clamp(14px,2vw,24px)">
+    <div class="cadre">
+      <ol class="creneaux">
+        <li class="creneau passe"><div class="heure">7 h<small>→ 10 h</small></div><figure class="vignette"><img src="assets/yt-SGuig8sZzOk.jpg" alt="" loading="lazy" width="320" height="180"></figure><a href="emission.html"><h2>Le Train d'Audace</h2><p>La matinale d'information : rubriques, invités et la parole aux auditeurs.</p></a></li>
+        <li class="creneau passe"><div class="heure">10 h<small>→ 11 h</small></div><figure class="vignette"><img src="assets/yt-4SZJ4qBOlyY.jpg" alt="" loading="lazy" width="320" height="180"></figure><a href="emission.html"><h2>Santé Magazine</h2><p>Santé et bien-être, avec les spécialistes.</p></a></li>
+        <li class="creneau en-cours"><div class="heure">12 h<small>→ 13 h 30</small></div><div class="vignette sans-visuel" aria-hidden="true"></div><a href="emission.html"><span class="etiquette"><span class="pastille"></span>En ce moment</span><h2>Audace Info Midi Magazine</h2><p>Politique, économie, culture, santé et sports.</p></a><button class="lecture" type="button" data-direct-btn><span class="ico"></span><span class="libelle"></span></button></li>
+        <li class="creneau "><div class="heure">15 h<small>→ 17 h</small></div><figure class="vignette"><img src="assets/yt-XF_svVTummI.jpg" alt="" loading="lazy" width="320" height="180"></figure><a href="emission.html"><h2>Le Club Audace</h2><p>La tribune qui décortique l'actualité sportive.</p></a></li>
+        <li class="creneau "><div class="heure">17 h<small>→ 19 h</small></div><div class="vignette sans-visuel" aria-hidden="true"></div><a href="emission.html"><h2>La Discothèque de Papa</h2><p>Les hits 1980-2000.</p></a></li>
+      </ol>
+      <div class="relance">
+        <b>Variante « nouvelle saison »</b>
+        <p>Quand RadioManager annonce une grille en préparation, la page affiche seulement ce message : « La nouvelle grille arrive prochainement », avec un lien vers les émissions. Les blocs « À l'antenne » du site se réduisent alors au bouton d'écoute.</p>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer class="pied"></footer>
+
+<script src="maquette.js"></script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="fr" data-direct="arret">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Femmes d'Audace — Maquette de la page d'émission</title>
+<!-- Maquette : polices chargées depuis Google Fonts. Dans le thème, elles seront hébergées localement (woff2). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600..800&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<header class="entete" data-courant="emissions"></header>
+
+<main id="contenu">
+<!-- Page d'émission : une page de programme, pas une liste d'articles.
+       Nom, accroche, visuel, horaire et animateur viennent de RadioManager (plugin audace-analytics).
+       Chaque champ absent disparaît simplement. Ici, visuel officiel et présentatrice de la saison 2021, repris de la chaîne YouTube ; horaire simulé. -->
+  <section class="emission-tete">
+    <div class="cadre">
+      <div>
+        <span class="rubrique">Émission</span>
+        <h1>Femmes d'Audace</h1>
+        <p class="accroche">Une tribune de promotion des compétences et du leadership au féminin.</p>
+        <dl class="fiche">
+          <div><dt>Diffusion</dt><dd>Chaque samedi, 10 h</dd></div>
+                    <div><dt>Présentation</dt><dd>Thessa N. <small>(saison 2021)</small></dd></div>
+        </dl>
+        <div class="boutons">
+          <button class="lecture" type="button" data-direct-btn><span class="ico"></span><span class="libelle"></span></button>
+          <a class="bouton clair" href="tel:+237223420949">Appeler l'antenne</a>
+        </div>
+      </div>
+      <figure class="vignette"><img src="assets/visuel-femmes-daudace.jpg" alt="Visuel de l'émission Femmes d'Audace, avec Thessa N." width="1030" height="720" fetchpriority="high"></figure>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="cadre">
+      <div class="section-tete"><div><h2>Archives vidéo</h2><p>Les émissions filmées de la saison 2021, à revoir.</p></div></div>
+      <div class="grille quatre">
+        <a class="carte video apparait" href="replay.html">
+          <figure class="vignette"><img src="assets/yt-2zXlHGr3meE.jpg" alt="" loading="lazy" width="320" height="180"><span class="jouer-badge"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5.8v12.4L13 7z"/></svg>Vidéo</span></figure>
+          <h3 style="margin-top:14px">Émission du 28 décembre 2021</h3>
+          <time class="date" datetime="2021-12-28">28 décembre 2021</time>
+        </a>
+        <a class="carte video apparait" href="replay.html">
+          <figure class="vignette rogne"><img src="assets/yt-EReypISQ4L8.jpg" alt="" loading="lazy" width="320" height="180"><span class="jouer-badge"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5.8v12.4L13 7z"/></svg>Vidéo</span></figure>
+          <h3 style="margin-top:14px">Émission du 3 décembre 2021</h3>
+          <time class="date" datetime="2021-12-03">3 décembre 2021</time>
+        </a>
+        <a class="carte video apparait" href="replay.html">
+          <figure class="vignette"><img src="assets/yt-6e-icgaHTIo.jpg" alt="" loading="lazy" width="320" height="180"><span class="jouer-badge"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5.8v12.4L13 7z"/></svg>Vidéo</span></figure>
+          <h3 style="margin-top:14px">Émission du 11 octobre 2021</h3>
+          <time class="date" datetime="2021-10-11">11 octobre 2021</time>
+        </a>
+        <a class="carte video apparait" href="replay.html">
+          <figure class="vignette"><img src="assets/yt-QDq3Nyc6nko.jpg" alt="" loading="lazy" width="320" height="180"><span class="jouer-badge"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5.8v12.4L13 7z"/></svg>Vidéo</span></figure>
+          <h3 style="margin-top:14px">Miss Santé Sud-Ouest Cameroun, édition de 2020</h3>
+          <time class="date" datetime="2021-02-18">18 février 2021</time>
+        </a>
+      </div>
+      <p class="note-fin">5 vidéos · de février à décembre 2021.</p>
+    </div>
+  </section>
+
+  <!-- « Les articles de l'émission » : section affichée seulement s'il existe des articles écrits rattachés à l'émission (aucun pour celle-ci). -->
+
+  <section class="section papier" id="emissions">
+    <div class="cadre">
+      <div class="section-tete">
+        <div><h2>Les autres émissions</h2><p>Tous les rendez-vous de l'antenne.</p></div>
+        <div class="droite"><a class="lien" href="grille.html">La grille complète</a><div class="fleches"><button type="button" aria-label="Émissions précédentes"></button><button type="button" aria-label="Émissions suivantes"></button></div></div>
+      </div>
+      <div class="defile"><div class="emissions">
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/yt-SGuig8sZzOk.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Lun – Ven · 7 h</span><h3>Le Train d'Audace</h3><p>La matinale d'information : rubriques, invités et la parole aux auditeurs.</p></div></a>
+        <a class="emission" href="emission.html"><div class="vignette sans-visuel" aria-hidden="true">Audace Info Midi Magazine</div><div class="txt"><span class="quand">Lun – Ven · 12 h</span><h3>Audace Info Midi Magazine</h3><p>Politique, économie, culture, santé et sports, avec la parole aux experts.</p></div></a>
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/yt-XF_svVTummI.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Lun – Ven · 15 h</span><h3>Le Club Audace</h3><p>La tribune qui décortique l'actualité sportive, scoops et analyses.</p></div></a>
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/yt-fqQl-u6G9Qc.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Jeudi · 14 h</span><h3>Parlons Droit !</h3><p>Droit pénal, civil, matrimonial : des acteurs reconnus répondent à vos questions.</p></div></a>
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/yt-4SZJ4qBOlyY.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Mercredi · 10 h</span><h3>Santé Magazine</h3><p>Santé et bien-être, avec les spécialistes qui répondent aux préoccupations.</p></div></a>
+        <a class="emission" href="emission.html"><figure class="vignette"><img src="assets/yt-psqWAWfNOYo.jpg" alt="" loading="lazy" width="320" height="180"></figure><div class="txt"><span class="quand">Samedi · 12 h</span><h3>Bold Génération</h3><p>La vitrine du savoir-faire jeune et du patrimoine culturel camerounais.</p></div></a>
+      </div></div>
+    </div>
+  </section>
+</main>
+
+<footer class="pied"></footer>
+
+<script src="maquette.js"></script>
+</body>
+</html>

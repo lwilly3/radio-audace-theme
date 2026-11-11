@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="fr" data-direct="arret">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Femmes d'Audace : Miss Santé Sud-Ouest Cameroun — Maquette du replay</title>
+<!-- Maquette : polices chargées depuis Google Fonts. Dans le thème, elles seront hébergées localement (woff2). -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600..800&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquette.css">
+</head>
+<body>
+<a class="evitement" href="#contenu">Aller au contenu</a>
+<header class="entete" data-courant="emissions"></header>
+
+<main id="contenu">
+<article>
+  <!-- Replay : la vidéo d'abord, sur fond encre. Rien n'est chargé de YouTube avant le clic (important sur un téléphone d'entrée de gamme).
+       Titre d'origine sur le site : « femmes d’audace du 18-02-2021: Miss Santé Sud-Ouest Cameroun édition de 2020 ».
+       L'extrait d'origine (« [carousel_slide id=’560′] ») est un reste de Divi : le thème l'ignore. -->
+  <div class="replay-scene">
+    <div class="cadre">
+      <button class="video" type="button" data-youtube="QDq3Nyc6nko" aria-label="Lire la vidéo : Miss Santé Sud-Ouest Cameroun, édition de 2020">
+        <img src="assets/yt-QDq3Nyc6nko-grand.jpg" alt="" width="1280" height="720" fetchpriority="high">
+        <span class="gros-bouton"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5.8v12.4L13 7z"/></svg></span>
+      </button>
+      <span class="rubrique"><a href="emission.html">Femmes d'Audace</a> · Replay</span>
+      <h1>Miss Santé Sud-Ouest Cameroun, édition de 2020</h1>
+      <div class="signature">
+        <span class="meta">Émission du <time datetime="2021-02-18">18 février 2021</time></span>
+        <div class="partage" data-partage aria-label="Partager"></div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hors-corps" style="padding-top:clamp(20px,3vw,32px)">
+    <a class="rappel-emission" href="emission.html" style="max-width:var(--lecture);margin-left:auto;margin-right:auto">
+      <img src="assets/visuel-femmes-daudace.jpg" alt="" width="1030" height="720">
+      <span class="t">Un épisode de l'émission<b>Femmes d'Audace</b>Chaque samedi à 10 h sur 106.8 FM</span>
+      <span class="fl" aria-hidden="true">›</span>
+    </a>
+  </div>
+  <!-- Corps : la plupart des replays n'ont aucun texte. S'il y en a, il s'affiche ici, dans la même colonne de lecture qu'un article. -->
+</article>
+
+<section class="section">
+  <div class="cadre">
+    <div class="section-tete"><h2>Autres vidéos de l'émission</h2><a class="lien" href="emission.html">Femmes d'Audace</a></div>
+    <div class="grille trois">
+      <a class="carte video apparait" href="replay.html">
+          <figure class="vignette"><img src="assets/yt-2zXlHGr3meE.jpg" alt="" loading="lazy" width="320" height="180"><span class="jouer-badge"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5.8v12.4L13 7z"/></svg>Vidéo</span></figure>
+          <h3 style="margin-top:14px">Émission du 28 décembre 2021</h3>
+          <time class="date" datetime="2021-12-28">28 décembre 2021</time>
+        </a>
+      <a class="carte video apparait" href="replay.html">
+          <figure class="vignette rogne"><img src="assets/yt-EReypISQ4L8.jpg" alt="" loading="lazy" width="320" height="180"><span class="jouer-badge"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5.8v12.4L13 7z"/></svg>Vidéo</span></figure>
+          <h3 style="margin-top:14px">Émission du 3 décembre 2021</h3>
+          <time class="date" datetime="2021-12-03">3 décembre 2021</time>
+        </a>
+      <a class="carte video apparait" href="replay.html">
+          <figure class="vignette"><img src="assets/yt-6e-icgaHTIo.jpg" alt="" loading="lazy" width="320" height="180"><span class="jouer-badge"><svg viewBox="0 0 14 14" aria-hidden="true"><path d="M2.5.8v12.4L13 7z"/></svg>Vidéo</span></figure>
+          <h3 style="margin-top:14px">Émission du 11 octobre 2021</h3>
+          <time class="date" datetime="2021-10-11">11 octobre 2021</time>
+        </a>
+    </div>
+  </div>
+</section>
+</main>
+
+<footer class="pied"></footer>
+
+<script src="maquette.js"></script>
+</body>
+</html>
