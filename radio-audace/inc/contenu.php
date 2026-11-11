@@ -119,6 +119,15 @@ add_filter( 'the_content', function ( $html ) {
 add_filter( 'the_content', 'ra_sans_shortcodes', 1 );
 add_filter( 'get_the_excerpt', 'ra_sans_shortcodes', 1 );
 
+/** Retire le surtitre en capitales séparées par des barres (« ÉNERGIE | CAMEROUN | ÉCONOMIE — Radio Audace »). */
+function ra_sans_surtitre( string $texte ): string {
+    $mot    = '[\p{Lu}\d\'’&-]{2,}';
+    $groupe = $mot . '(?:\s+' . $mot . ')*';
+    $texte  = preg_replace( '~^\s*(?:' . $groupe . '\s*\|\s*)+' . $groupe . '\s*(?:[—–-]\s*Radio Audace\s*)?~u', '', $texte );
+    $texte  = preg_replace( '~^\s*[—–-]\s*Radio Audace\s*~u', '', (string) $texte );
+    return (string) $texte;
+}
+
 /**
  * Chapeau d'un article : l'extrait, débarrassé de ce que RadioManager y laisse
  * (surtitre « ÉNERGIE | CAMEROUN | ÉCONOMIE — Radio Audace », reste de Divi).
@@ -137,12 +146,7 @@ function ra_chapeau( $post = null, int $mots = 0 ): string {
         $extrait = wp_trim_words( trim( $texte ), 34, '…' );
     }
     $extrait = html_entity_decode( $extrait, ENT_QUOTES, 'UTF-8' );
-    // Surtitre en capitales séparées par des barres, jusqu'au nom de la station.
-    $mot     = '[\p{Lu}\d\'’&-]{2,}';
-    $groupe  = $mot . '(?:\s+' . $mot . ')*';
-    $extrait = preg_replace( '~^(?:' . $groupe . '\s*\|\s*)+' . $groupe . '\s*(?:[—–-]\s*Radio Audace\s*)?~u', '', $extrait );
-    $extrait = preg_replace( '~^\s*[—–-]\s*Radio Audace\s*~u', '', $extrait );
-    $extrait = trim( preg_replace( '~\s+~u', ' ', (string) $extrait ) );
+    $extrait = trim( preg_replace( '~\s+~u', ' ', ra_sans_surtitre( $extrait ) ) );
     if ( $mots ) {
         $extrait = wp_trim_words( $extrait, $mots, '…' );
     }

@@ -8,6 +8,15 @@ Chaque section `## [X.Y.Z]` sert de notes à la release GitHub du même numéro
 
 ## [Non publié]
 
+## [0.3.0] - 2026-11-11
+
+### Ajouté
+- Fiche de partage (WhatsApp, Facebook, X) sur l'accueil, les émissions, les rubriques, les replays et les pages : titre, description et image. Le thème complète ce qu'une extension produit déjà pour les articles, sans le doubler
+- Image de partage par défaut et icône du site (tant qu'aucune icône n'est choisie dans WordPress)
+
+### Corrigé
+- Description des articles partagés : le surtitre « ÉNERGIE | CAMEROUN | ÉCONOMIE » n'apparaît plus en tête
+
 ## [0.2.4] - 2026-11-11
 
 ### Ajouté
