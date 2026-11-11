@@ -549,3 +549,8 @@ html.charge main { opacity: .45; }
 /* Bandeau du direct : un titre de chanson long tient sur une ligne. */
 .bandeau-direct b { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 .bandeau-direct .t { min-width: 0; }
+
+/* Bloc « À l'antenne » sans grille : liste des émissions à la place de « À suivre ». */
+.suite.sans-heure li:not(.titre) { padding: 0; }
+.suite.sans-heure a { display: block; flex: 1; padding: 11px 0; min-height: 44px; }
+.suite.sans-heure a:hover b { color: #9DB4FF; }

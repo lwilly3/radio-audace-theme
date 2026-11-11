@@ -205,6 +205,20 @@ function ra_bloc_antenne(): void {
             echo '<li><time>' . esc_html( $s['heure'] ) . '</time><div><b>' . esc_html( $s['titre'] ) . '</b>' . ( $s['detail'] ? '<span>' . esc_html( $s['detail'] ) . '</span>' : '' ) . '</div></li>';
         }
         echo '</ul>';
+    } else {
+        // Pas de grille (nouvelle saison en préparation) : le bas du bloc présente les émissions au lieu de rester vide.
+        $emissions = array_slice( ra_emissions(), 0, 4 );
+        if ( $emissions ) {
+            echo '<ul class="suite sans-heure"><li class="titre">Les émissions</li>';
+            foreach ( $emissions as $emission ) {
+                $desc = ra_description_emission( $emission );
+                echo '<li><a href="' . esc_url( get_category_link( $emission ) ) . '"><b>' . esc_html( ra_nom_categorie( $emission ) ) . '</b>' . ( $desc ? '<span>' . esc_html( wp_trim_words( $desc, 9, '…' ) ) . '</span>' : '' ) . '</a></li>';
+            }
+            echo '</ul>';
+            if ( ra_id_emissions() ) {
+                echo '<a class="vers-grille" href="' . esc_url( get_category_link( ra_id_emissions() ) ) . '">Toutes les émissions</a>';
+            }
+        }
     }
     if ( ra_url_grille() ) {
         echo '<a class="vers-grille" href="' . esc_url( ra_url_grille() ) . '">Toute la grille</a>';

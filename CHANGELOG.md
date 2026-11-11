@@ -8,6 +8,11 @@ Chaque section `## [X.Y.Z]` sert de notes à la release GitHub du même numéro
 
 ## [Non publié]
 
+## [0.2.2] - 2026-11-11
+
+### Corrigé
+- Accueil : sans grille des programmes, le bloc « À l'antenne » restait à moitié vide. Il présente maintenant les principales émissions, avec un lien vers toutes les émissions
+
 ## [0.2.1] - 2026-11-11
 
 ### Ajouté
