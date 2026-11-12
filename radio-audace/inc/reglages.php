@@ -117,6 +117,9 @@ add_filter( 'body_class', function ( array $classes ): array {
  * il choisirait le gabarit de liste. On s'appuie donc sur l'adresse demandée.
  */
 function ra_est_accueil(): bool {
+    if ( ra_est_ecoute() ) { // La page « Écouter » est servie par une requête d'accueil minimale : ce n'est pas l'accueil.
+        return false;
+    }
     if ( isset( $_GET['liste'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification -- « Tous les articles » : la liste, pas l'accueil.
         return false;
     }
@@ -145,7 +148,7 @@ add_filter( 'body_class', function ( array $classes ): array {
 
 // Listes en grille de trois : douze cartes par page.
 add_action( 'pre_get_posts', function ( WP_Query $requete ) {
-    if ( ! is_admin() && $requete->is_main_query() && ( $requete->is_archive() || $requete->is_home() || $requete->is_search() ) ) {
+    if ( ! is_admin() && ! ra_est_ecoute() && $requete->is_main_query() && ( $requete->is_archive() || $requete->is_home() || $requete->is_search() ) ) {
         $requete->set( 'posts_per_page', 12 );
     }
 } );

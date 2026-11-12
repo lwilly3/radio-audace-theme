@@ -64,6 +64,7 @@ if ( ! isset( $legal['Confidentialité'] ) && get_privacy_policy_url() ) {
         <?php endforeach; ?>
         <?php if ( $mere ) : ?><li><a href="<?php echo esc_url( get_category_link( $mere ) ); ?>">Toutes les émissions</a></li><?php endif; ?>
         <?php if ( ra_url_grille() ) : ?><li><a href="<?php echo esc_url( ra_url_grille() ); ?>">Grille des programmes</a></li><?php endif; ?>
+        <li><a href="<?php echo esc_url( ra_url_ecoute() ); ?>">Le poste : écouter en ligne</a></li>
       </ul></nav>
       <?php endif; ?>
 

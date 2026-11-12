@@ -134,7 +134,10 @@ function ra_now_playing(): ?array {
 /**
  * État de l'antenne, prêt à afficher.
  *
- * @return array{type: string, label: string, titre: string, detail: string, desc: string, suite: array}
+ * « court » est le libellé sans la fréquence, pour les endroits qui l'affichent déjà (page « Écouter ») ;
+ * sans information de RadioManager, il dit « À l'antenne » : on n'affirme pas « En direct ».
+ *
+ * @return array{type: string, label: string, court: string, titre: string, detail: string, desc: string, suite: array}
  */
 function ra_antenne(): array {
     $station = ra_station();
@@ -145,6 +148,7 @@ function ra_antenne(): array {
     $etat = array(
         'type'   => 'inconnu',
         'label'  => 'En direct · ' . $freq,
+        'court'  => "À l'antenne",
         'titre'  => $station['nom'],
         'detail' => "Bien plus que l'info",
         'desc'   => '',
@@ -167,6 +171,7 @@ function ra_antenne(): array {
             $details[] = "jusqu'à " . ra_heure( $grille['fin'] );
         }
         $etat['type']   = 'emission';
+        $etat['court']  = 'En direct';
         $etat['titre']  = (string) $emission['title'];
         $etat['detail'] = ra_majuscule( implode( ' · ', $details ) );
         $etat['desc']   = ! empty( $emission['current_segment']['title'] )
@@ -182,6 +187,7 @@ function ra_antenne(): array {
         }
         $etat['type']   = 'musique';
         $etat['label']  = 'En ce moment · ' . $freq;
+        $etat['court']  = 'En ce moment';
         $etat['titre']  = (string) $piste['title'];
         $etat['detail'] = ( $artiste ? $artiste . ' · ' : '' ) . 'Musique';
         if ( ! empty( $np['next_show']['title'] ) ) {

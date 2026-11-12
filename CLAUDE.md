@@ -215,6 +215,32 @@ Points à trancher avec l'utilisateur au moment de la maquette :
   minutes. Détails dans `~/App/radioaudace-website/CLAUDE.md`.
 - Secrets : jamais dans ce dépôt ni dans les sorties.
 
+## Page « Écouter » (`/ecouter`)
+
+Demande de l'utilisateur du 2026-11-12 : un lien à envoyer (WhatsApp ou autre)
+qui ouvre un lecteur. Il a retenu le **poste de radio ancien interactif**
+(maquette `design/ecouter-poste.html`, deux analyses critiques traitées ; la
+version sobre `design/ecouter.html` est gardée pour mémoire).
+
+- Écrit dans le thème **0.4.0** : `inc/ecoute.php` (adresse, titre, fiche de
+  partage), gabarit `ecouter.php`, `assets/css/ecouter.css`,
+  `assets/js/ecouter.js`, image `assets/img/partage-ecouter.jpg`.
+- L'adresse est fournie par le thème (action `parse_request`, filtre
+  `ra_ecoute_chemin`) : pas de page WordPress, pas de règle de réécriture.
+- Le bouton pilote le lecteur de `theme.js` ; `ecouter.js` n'ajoute que les
+  textes d'état, le bouton d'accord (jeu facultatif, muet sur iPhone) et la
+  copie du lien. La page est exclue de la navigation sans rechargement.
+- Règles posées : le rouge ne s'allume qu'avec le son ; pas de bouton de
+  volume ; la toile du haut-parleur cède la hauteur pour que tout tienne sur
+  un écran ; sans information, la vitre dit « À l'antenne » (champ `court` de
+  `ra_antenne()`).
+- **Jamais essayé dans WordPress** : rendu vérifié hors WordPress avec des
+  fonctions de remplacement. À vérifier sur le site : que `/ecouter` répond
+  (code 200, pas de redirection vers l'accueil), l'aperçu du lien dans
+  WhatsApp, le son et l'accord sur un vrai téléphone (Android et iPhone).
+- Non décidé : le sort de l'ancienne page « lecteur » (VMPlayer), laissée
+  telle quelle.
+
 ## Dépôt et mises à jour
 
 - Dépôt GitHub `lwilly3/radio-audace-theme`, **public** depuis le 2026-11-11

@@ -36,10 +36,11 @@
 
   /* ------------------------------------------------------------ Antenne */
 
-  var antenne = cfg.antenne || { type: 'inconnu', label: 'En direct', titre: 'Radio Audace', detail: '', desc: '' };
+  var antenne = cfg.antenne || { type: 'inconnu', label: 'En direct', court: "À l'antenne", titre: 'Radio Audace', detail: '', desc: '' };
 
   function afficherAntenne(zone) {
     $$('[data-antenne]', zone).forEach(function (bloc) {
+      bloc.setAttribute('data-type', antenne.type || 'inconnu');
       $$('[data-a]', bloc).forEach(function (el) {
         var v = antenne[el.getAttribute('data-a')] || '';
         el.textContent = v;
@@ -67,6 +68,7 @@
 
   var DELAI = 12000; // Sans son au bout de 12 s, on le dit au lieu de rester sur « Connexion… ».
   var audio = null, minuteur = 0, etatCourant = 'arret';
+  cfg.audio = function () { return audio; }; // Pour la page « Écouter » (ecouter.js) : le son baisse quand on tourne l'accord.
 
   function libelles(e) {
     return {
@@ -276,8 +278,9 @@
   /* ------------------------------------------------------------ Navigation sans rechargement */
 
   // Active seulement pendant l'écoute, pour un visiteur non connecté. Sinon : navigation normale.
+  // La page « Écouter » est autonome (ni en-tête ni pied) : on y entre et on en sort par une navigation normale.
   function douce() {
-    return !!audio && !document.getElementById('wpadminbar') && 'DOMParser' in window && !!history.pushState;
+    return !!audio && !document.body.classList.contains('ecoute') && !document.getElementById('wpadminbar') && 'DOMParser' in window && !!history.pushState;
   }
 
   function naviguerSiPossible(ev, cible) {
@@ -310,7 +313,7 @@
         var doc = new DOMParser().parseFromString(rep.html, 'text/html');
         var nouveau = doc.querySelector('main#contenu'), ancien = $('main#contenu');
         // Page qui a besoin de ses propres scripts (formulaire, module d'un plugin) : navigation normale.
-        if (!nouveau || !ancien || nouveau.querySelector('script, form:not([role="search"]), iframe')) throw new Error('page à charger normalement');
+        if (!nouveau || !ancien || doc.body.classList.contains('ecoute') || nouveau.querySelector('script, form:not([role="search"]), iframe')) throw new Error('page à charger normalement');
         ancien.innerHTML = nouveau.innerHTML;
         document.title = doc.title;
         document.body.className = doc.body.className;

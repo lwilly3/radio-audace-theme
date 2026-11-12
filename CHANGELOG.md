@@ -8,6 +8,13 @@ Chaque section `## [X.Y.Z]` sert de notes à la release GitHub du même numéro
 
 ## [Non publié]
 
+## [0.4.0] - 2026-11-12
+
+### Ajouté
+- Page « Écouter » à l'adresse `/ecouter` : un poste de radio plein écran, à envoyer par lien (WhatsApp, SMS, réseaux). Un appui lance le direct ; la vitre du cadran s'éclaire, le voyant s'allume, et l'on peut jouer avec le bouton d'accord. Rien à créer dans WordPress : l'adresse est fournie par le thème
+- Fiche de partage propre à cette page : elle montre le poste allumé
+- Pied de page : lien « Le poste : écouter en ligne »
+
 ## [0.3.0] - 2026-11-11
 
 ### Ajouté

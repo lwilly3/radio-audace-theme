@@ -1,0 +1,172 @@
+/* Thème Radio Audace — page « Écouter » (/ecouter) : un poste de radio ancien, dessiné sans image.
+   Chargée seulement sur cette page, après theme.css (variables, .sr, .pastille).
+   Principes : le rouge ne s'allume qu'avec le son ; la toile du haut-parleur prend la hauteur
+   qui reste, pour que le bouton d'écoute et le partage tiennent sur un écran. */
+/* Pas de lecteur de bas d'écran ici : la page entière est le lecteur. */
+html[data-direct] body.ecoute { padding-bottom: 0; background: var(--encre); }
+
+.pv-scene {
+  min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; align-items: center;
+  padding: env(safe-area-inset-top) var(--marge) calc(18px + env(safe-area-inset-bottom));
+  color: #fff;
+  background:
+    radial-gradient(90% 55% at 50% 42%, rgba(60, 96, 190, .38) 0%, rgba(26, 52, 112, 0) 70%),
+    linear-gradient(180deg, #0D1D3A 0%, var(--encre) 60%);
+}
+.pv-scene :focus-visible { outline-color: #fff; }
+.pv-scene > * { width: 100%; max-width: 430px; }
+
+/* Le rouge est réservé au son qui joue : poste éteint, pastilles, aiguille et voyant sont neutres. */
+.pv-scene .pastille { background: #6F7F9C; transition: background .6s; }
+[data-direct="lecture"] .pv-scene .pastille { background: var(--direct); }
+
+.pv-tete { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 52px; flex: none; }
+.pv-tete b { display: inline-flex; align-items: center; gap: 8px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; font-size: 11.5px; color: #A9B6CC; transition: color .6s; }
+[data-direct="lecture"] .pv-tete b { color: #FFB4A8; }
+.pv-tete a { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 500; color: #A9B6CC; }
+.pv-tete a:hover { color: #fff; }
+
+.pv-milieu { flex: 1; display: flex; flex-direction: column; justify-content: center; padding: clamp(6px, 2vh, 22px) 0 clamp(12px, 2.6vh, 24px); }
+
+/* ---------- Le poste ---------- */
+.pv-poste {
+  position: relative; display: flex; flex-direction: column; gap: 14px; padding: 16px;
+  border-radius: 30px;
+  background: linear-gradient(170deg, #F8F0E0 0%, #EADEC6 58%, #DBCBAB 100%);
+  box-shadow: inset 0 2px 0 rgba(255, 255, 255, .85), inset 0 -7px 12px rgba(120, 95, 50, .28), 0 34px 50px -20px rgba(0, 0, 0, .75);
+}
+.pv-poste::before, .pv-poste::after { content: ""; position: absolute; bottom: -9px; width: 48px; height: 10px; border-radius: 0 0 9px 9px; background: #1A2640; }
+.pv-poste::before { left: 42px; } .pv-poste::after { right: 42px; }
+
+/* Haut-parleur : toile tissée au bleu du logo, plaque de marque. */
+.pv-toile {
+  position: relative; overflow: hidden; display: grid; place-items: center;
+  /* Hauteur = ce qui reste de l'écran quand tout le reste est logé dans le pire cas (titre sur deux lignes,
+     prochaine émission sur deux lignes). C'est la toile qui cède, pas le partage qui sort de l'écran. */
+  height: clamp(46px, calc(100vh - 600px), 190px); height: clamp(46px, calc(100svh - 600px), 190px); border-radius: 18px;
+  background-color: #25348C;
+  background-image:
+    repeating-linear-gradient(90deg, rgba(255, 255, 255, .09) 0 2px, transparent 2px 6px),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, .22) 0 2px, transparent 2px 6px);
+  box-shadow: inset 0 3px 12px rgba(0, 0, 0, .6), 0 1px 0 rgba(255, 255, 255, .75);
+}
+.pv-toile::after { content: ""; position: absolute; width: 150%; aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle, rgba(255, 255, 255, .16) 0%, rgba(255, 255, 255, 0) 60%); opacity: 0; }
+[data-direct="lecture"] .pv-toile::after { animation: pv-souffle 2.2s ease-in-out infinite; }
+@keyframes pv-souffle { 0%, 100% { opacity: .25; transform: scale(.7); } 50% { opacity: .9; transform: scale(1); } }
+.pv-plaque { position: relative; z-index: 1; padding: 4px 14px; padding: clamp(4px, 10cqh, 7px) 14px; border-radius: 10px; background: linear-gradient(#FCF6EA, #EADFC8); box-shadow: 0 2px 6px rgba(0, 0, 0, .45), inset 0 1px 0 #fff; }
+/* La plaque suit la hauteur de la toile : elle n'en déborde jamais. */
+.pv-toile { container-type: size; }
+.pv-plaque img { height: 22px; height: clamp(18px, 44cqh, 32px); width: auto; }
+
+/* Vitre du cadran : sombre poste éteint, elle chauffe puis s'éclaire quand le son joue. */
+.pv-vitre {
+  position: relative; isolation: isolate; overflow: hidden;
+  border-radius: 14px; padding: 12px 22px;
+  background: #101828; color: rgba(255, 255, 255, .72);
+  box-shadow: inset 0 2px 9px rgba(0, 0, 0, .75), 0 1px 0 rgba(255, 255, 255, .75);
+  transition: color .8s;
+}
+.pv-vitre::before { content: ""; position: absolute; inset: 0; z-index: -1; background: radial-gradient(120% 150% at 50% 0%, #FFF3C8 0%, #F7D27A 58%, #E2A842 100%); opacity: 0; transition: opacity .9s; }
+.pv-vitre::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(158deg, rgba(255, 255, 255, .13) 0 28%, rgba(255, 255, 255, 0) 28.4%); }
+[data-direct="lecture"] .pv-vitre { color: #3A2C12; }
+[data-direct="lecture"] .pv-vitre::before { opacity: 1; }
+[data-direct="charge"] .pv-vitre::before { animation: pv-chauffe 1.1s ease-in-out infinite; }
+@keyframes pv-chauffe { 0%, 100% { opacity: .06; } 40% { opacity: .3; } 55% { opacity: .14; } 75% { opacity: .34; } }
+
+/* Portion de la bande FM, de 102 à 108 MHz (fin de bande) : la station n'est plus collée au bord. */
+.pv-echelle { position: relative; height: 58px; }
+.pv-echelle .st { position: absolute; top: -3px; transform: translateX(-50%); font-family: var(--titre); font-weight: 700; font-size: 10.5px; letter-spacing: .14em; }
+.pv-echelle i { position: absolute; top: 23px; width: 1px; height: 7px; margin-left: -.5px; border-radius: 1px; background: currentColor; opacity: .45; }
+.pv-echelle i.fort { top: 19px; width: 1.5px; margin-left: -.75px; height: 13px; opacity: .95; }
+.pv-echelle .n.ici { font-weight: 800; opacity: 1; }
+.pv-echelle .n { position: absolute; top: 43px; transform: translateX(-50%); font-size: 11px; font-weight: 600; font-variant-numeric: tabular-nums; opacity: .85; }
+.pv-aiguille { position: absolute; top: 13px; bottom: 18px; left: calc((var(--f, 106.8) - 102) / 7 * 100%); width: 3px; margin-left: -1.5px; border-radius: 2px; background: #EFE5CC; transition: left .55s cubic-bezier(.3, 1.5, .5, 1), background .6s, box-shadow .5s; }
+.pv-aiguille::before { content: ""; position: absolute; left: 50%; top: -3px; width: 9px; height: 9px; margin-left: -4.5px; border-radius: 50%; background: inherit; }
+.pv-poste.accorde .pv-aiguille { transition: background .6s; }
+[data-direct="lecture"] .pv-aiguille { background: var(--direct); box-shadow: 0 0 8px 1px rgba(232, 68, 46, .7); }
+[data-direct="charge"] .pv-aiguille { animation: pv-tremble .5s ease-in-out infinite; }
+@keyframes pv-tremble { 0%, 100% { transform: translateX(-3px); } 50% { transform: translateX(3px); } }
+
+.pv-affiche { margin-top: 8px; padding-top: 9px; border-top: 1px solid rgba(255, 255, 255, .16); text-align: center; min-width: 0; transition: border-color .8s; }
+[data-direct="lecture"] .pv-affiche { border-color: rgba(58, 44, 18, .25); }
+.pv-etiq { display: inline-flex; align-items: center; gap: 7px; font-size: 11px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; transition: color .8s; }
+[data-direct="lecture"] .pv-etiq { color: #B02A17; }
+/* Un titre long passe sur deux lignes : il reste lisible en entier. */
+.pv-affiche h2 { font-family: var(--titre); font-weight: 700; font-size: clamp(18px, 5.2vw, 22px); letter-spacing: -.02em; line-height: 1.18; margin-top: 3px; color: #fff; text-wrap: balance; display: -webkit-box; -webkit-box-orient: vertical; -webkit-line-clamp: 2; overflow: hidden; transition: color .8s; }
+[data-direct="lecture"] .pv-affiche h2 { color: #1A1206; }
+.pv-affiche .d { display: block; font-size: 13.5px; margin-top: 1px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* Façade : voyant, bouton d'écoute, accord. */
+.pv-facade { display: grid; grid-template-columns: minmax(0, 1fr) auto minmax(0, 1fr); align-items: end; justify-items: center; padding: 4px 4px 2px; }
+.pv-commande { display: flex; flex-direction: column; align-items: center; gap: 8px; font-family: var(--titre); font-weight: 700; font-size: 10.5px; letter-spacing: .14em; text-transform: uppercase; color: #6B5A38; }
+.pv-niche { width: clamp(50px, 15vw, 60px); aspect-ratio: 1; display: grid; place-items: center; }
+/* Voyant de marche : un vrai cabochon, sombre poste éteint, rouge quand le son joue, ambre si le direct est indisponible. */
+.pv-voyant { width: clamp(30px, 9vw, 34px); aspect-ratio: 1; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #6B7388, #262D40 70%); box-shadow: 0 0 0 3px #CDBB8E, 0 0 0 4px rgba(90, 70, 30, .35), inset 0 -2px 3px rgba(0, 0, 0, .45); transition: background .5s, box-shadow .5s; }
+[data-direct="lecture"] .pv-voyant { background: radial-gradient(circle at 35% 30%, #FFB3A6, var(--direct) 60%, #B02A17); box-shadow: 0 0 0 3px #CDBB8E, 0 0 0 4px rgba(90, 70, 30, .35), 0 0 16px 4px rgba(232, 68, 46, .6); }
+[data-direct="erreur"] .pv-voyant { background: radial-gradient(circle at 35% 30%, #FFF0C4, #F0B429 60%, #B97A0A); box-shadow: 0 0 0 3px #CDBB8E, 0 0 0 4px rgba(90, 70, 30, .35), 0 0 14px 3px rgba(240, 180, 41, .55); }
+[data-direct="charge"] .pv-voyant { animation: pv-clignote 1.1s ease-in-out infinite; }
+@keyframes pv-clignote { 50% { background: radial-gradient(circle at 35% 30%, #B9C0D2, #4A5470 70%); } }
+
+.pv-prise { width: 100%; aspect-ratio: 1; border-radius: 50%; box-shadow: 0 0 0 3px #CDBB8E, 0 0 0 4px rgba(90, 70, 30, .35), 0 6px 10px rgba(60, 40, 10, .5); touch-action: none; cursor: grab; }
+.pv-prise:active { cursor: grabbing; }
+.pv-rond { position: relative; width: 100%; height: 100%; border-radius: 50%; background: repeating-conic-gradient(#1F2B47 0 5deg, #0A1220 5deg 10deg); transform: rotate(var(--angle, 0deg)); transition: transform .55s cubic-bezier(.3, 1.5, .5, 1); }
+.pv-prise.tient .pv-rond { transition: none; }
+.pv-rond::before { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: radial-gradient(circle at 35% 30%, #3D4C6E, #0E1626 72%); }
+.pv-rond::after { content: ""; position: absolute; top: 10px; left: 50%; width: 3px; height: 11px; margin-left: -1.5px; border-radius: 2px; background: #F3E7CB; }
+
+.pv-marche {
+  position: relative; display: grid; place-items: center;
+  width: clamp(68px, 21vw, 88px); aspect-ratio: 1; border-radius: 50%;
+  background: radial-gradient(circle at 35% 28%, #fff, #ECE3CF 72%); color: var(--encre);
+  box-shadow: 0 0 0 4px #CDBB8E, 0 0 0 5px rgba(90, 70, 30, .35), 0 9px 14px rgba(60, 40, 10, .55);
+  transition: transform .15s, box-shadow .15s;
+}
+.pv-marche:active, [data-direct="lecture"] .pv-marche, [data-direct="charge"] .pv-marche {
+  transform: translateY(2px);
+  box-shadow: 0 0 0 4px #CDBB8E, 0 0 0 5px rgba(90, 70, 30, .35), 0 2px 4px rgba(60, 40, 10, .5), inset 0 3px 7px rgba(0, 0, 0, .28);
+}
+.pv-marche .ico { display: grid; place-items: center; }
+.pv-marche .ico svg { width: 30px; height: 30px; fill: currentColor; }
+.pv-marche::after { content: ""; position: absolute; inset: -4px; border-radius: 50%; border: 2px solid rgba(42, 59, 153, .7); opacity: 0; pointer-events: none; }
+[data-direct="arret"] .pv-marche::after { animation: pv-appel 2.2s ease-out infinite; }
+@keyframes pv-appel { 0% { opacity: .9; transform: scale(1); } 80%, 100% { opacity: 0; transform: scale(1.22); } }
+
+.pv-ou { text-align: center; margin-top: 24px; min-height: 22px; font-size: 14.5px; color: #C9D3E4; }
+[data-direct="erreur"] .pv-ou { color: #FFD27A; }
+.pv-apres { text-align: center; margin-top: 4px; font-size: 13.5px; color: #8696B3; }
+/* La ligne sous le poste annonce la prochaine émission : elle n'a de sens que pendant la musique. */
+.pv-scene:not([data-type="musique"]) .pv-apres { display: none; }
+.pv-ou a { color: #fff; text-decoration: underline; text-underline-offset: 3px; }
+
+.pv-partage { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pv-partage a, .pv-partage button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; padding: 0 14px; border-radius: 14px; background: rgba(255, 255, 255, .09); color: #fff; font-size: 14.5px; font-weight: 600; transition: background .2s; }
+.pv-partage a:hover, .pv-partage button:hover { background: rgba(255, 255, 255, .16); }
+.pv-partage svg { width: 20px; height: 20px; fill: currentColor; flex: none; }
+
+/* Petits téléphones (320 px de large, ou peu de hauteur) : tout reste sur un écran. */
+@media (max-width: 350px), (max-height: 600px) {
+  .pv-tete { height: 44px; }
+  .pv-toile { height: clamp(46px, calc(100vh - 550px), 190px); height: clamp(46px, calc(100svh - 550px), 190px); }
+  .pv-poste { padding: 12px; gap: 10px; border-radius: 26px; }
+  .pv-vitre { padding: 10px 16px; }
+  .pv-ou { margin-top: 18px; font-size: 14px; }
+  .pv-partage a, .pv-partage button { min-height: 46px; padding: 0 8px; gap: 7px; font-size: 13.5px; white-space: nowrap; }
+}
+
+/* Téléphone couché : la toile disparaît, cadran et commandes passent côte à côte ; le bouton d'écoute reste à l'écran. */
+@media (orientation: landscape) and (max-height: 520px) {
+  .pv-scene > * { max-width: 760px; }
+  .pv-milieu { padding: 2px 0 10px; }
+  .pv-poste { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(250px, 1fr); align-items: center; gap: 16px; padding: 14px; }
+  .pv-marche { width: 76px; }
+  .pv-niche { width: 52px; }
+  .pv-toile { display: none; }
+  .pv-ou { margin-top: 16px; }
+  .pv-partage { max-width: 430px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pv-toile::after, .pv-vitre::before, .pv-aiguille, .pv-marche::after, .pv-voyant { animation: none !important; }
+  .pv-aiguille, .pv-rond { transition: none; }
+}

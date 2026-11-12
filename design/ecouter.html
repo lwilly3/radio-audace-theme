@@ -1,0 +1,224 @@
+<!doctype html>
+<html lang="fr" data-direct="arret">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0A1628">
+<title>Écouter Radio Audace 106.8 FM en direct</title>
+<!-- Maquette de la page « Écouter » : un lien à envoyer (WhatsApp, SMS, réseaux) qui ouvre un lecteur plein écran.
+     Adresse proposée : https://www.radioaudace.com/ecouter
+     Page autonome : ni en-tête ni pied du site, rien d'autre à charger que le lecteur. -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@600..800&family=Inter:wght@400..700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="maquette.css">
+<style>
+/* Le lecteur persistant du site n'a pas lieu d'être ici : la page entière est le lecteur. */
+.lecteur { display: none; }
+html body { padding-bottom: 0; background: var(--encre); }
+
+.poste {
+  min-height: 100vh; min-height: 100svh;
+  display: flex; flex-direction: column; align-items: center;
+  padding: env(safe-area-inset-top) var(--marge) calc(18px + env(safe-area-inset-bottom));
+  color: #fff;
+  background:
+    radial-gradient(120% 70% at 0% 0%, #1A3470 0%, rgba(26, 52, 112, 0) 60%),
+    linear-gradient(180deg, #0D1D3A 0%, var(--encre) 55%);
+}
+.poste :focus-visible { outline-color: #fff; }
+.poste > * { width: 100%; max-width: 440px; }
+
+.poste-tete { display: flex; align-items: center; justify-content: space-between; gap: 16px; height: 60px; flex: none; }
+.poste-tete img { height: 30px; width: auto; filter: brightness(0) invert(1); }
+.poste-tete a.site { display: inline-flex; align-items: center; min-height: 44px; font-size: 14px; font-weight: 500; color: #A9B6CC; }
+.poste-tete a.site:hover { color: #fff; }
+
+.poste-coeur { flex: 1; display: flex; flex-direction: column; justify-content: center; gap: clamp(18px, 4.2vh, 40px); padding: clamp(8px, 2vh, 24px) 0; }
+
+/* Le cadran : la fréquence est la signature de la page. L'aiguille cherche la station pendant la connexion. */
+.cadran { text-align: center; }
+.mhz { font-family: var(--titre); font-weight: 800; font-size: clamp(64px, min(23vw, 15vh), 112px); line-height: .9; letter-spacing: -.05em; font-variant-numeric: tabular-nums; }
+.mhz small { font-size: .26em; letter-spacing: .04em; font-weight: 700; color: #7EA2FF; margin-left: .3em; }
+.echelle { position: relative; height: 50px; margin-top: clamp(10px, 2vh, 18px); -webkit-mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent); mask-image: linear-gradient(90deg, transparent, #000 16%, #000 84%, transparent); }
+.echelle i { position: absolute; top: 8px; width: 1.5px; height: 12px; margin-left: -.75px; border-radius: 1px; background: rgba(255, 255, 255, .28); }
+.echelle i.fort { top: 2px; height: 18px; background: rgba(255, 255, 255, .7); }
+.echelle span { position: absolute; top: 28px; transform: translateX(-50%); font-size: 11.5px; font-weight: 600; color: #8696B3; font-variant-numeric: tabular-nums; }
+.aiguille { position: absolute; left: 50%; top: 0; width: 3px; height: 26px; margin-left: -1.5px; border-radius: 2px; background: var(--direct); box-shadow: 0 0 0 0 rgba(232, 68, 46, .5); transition: box-shadow .4s; }
+[data-direct="lecture"] .aiguille { box-shadow: 0 0 14px 2px rgba(232, 68, 46, .65); }
+[data-direct="charge"] .aiguille { animation: cherche 1.6s ease-in-out infinite; }
+@keyframes cherche { 0%, 100% { left: 50%; } 30% { left: 38%; } 70% { left: 61%; } }
+
+.maintenant { text-align: center; }
+.maintenant .etiquette { display: inline-flex; align-items: center; gap: 8px; font-size: 12px; font-weight: 700; letter-spacing: .09em; text-transform: uppercase; color: #FFB4A8; }
+.maintenant h1 { font-family: var(--titre); font-weight: 700; font-size: clamp(23px, 6.4vw, 30px); letter-spacing: -.025em; line-height: 1.12; margin-top: 8px; text-wrap: balance; }
+.maintenant .detail { color: #A9B6CC; font-size: 15.5px; margin-top: 4px; }
+
+.commande { display: flex; flex-direction: column; align-items: center; gap: 12px; }
+.gros { position: relative; width: clamp(76px, 12vh, 96px); aspect-ratio: 1; border-radius: 50%; background: #fff; color: var(--encre); display: grid; place-items: center; transition: transform .2s var(--doucement); }
+.gros:hover { transform: scale(1.04); }
+.gros:active { transform: scale(.96); }
+.gros .ico { display: grid; place-items: center; }
+.gros .ico svg { width: 34%; min-width: 28px; fill: currentColor; }
+.gros::after { content: ""; position: absolute; inset: 0; border-radius: 50%; border: 2px solid rgba(255, 255, 255, .5); opacity: 0; }
+[data-direct="lecture"] .gros::after { animation: halo 2.4s ease-out infinite; }
+@keyframes halo { 0% { opacity: .9; transform: scale(1); } 100% { opacity: 0; transform: scale(1.55); } }
+.commande .ou { display: flex; align-items: center; justify-content: center; gap: 12px; min-height: 26px; font-size: 14.5px; color: #C9D3E4; }
+.commande .onde { height: 20px; }
+html:not([data-direct="lecture"]) .commande .onde { display: none; }
+[data-direct="erreur"] .commande .ou { color: #FFD27A; }
+
+.apres { text-align: center; font-size: 14px; color: #8696B3; }
+
+.poste-pied { flex: none; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.poste-pied a, .poste-pied button { display: inline-flex; align-items: center; justify-content: center; gap: 9px; min-height: 50px; padding: 0 14px; border-radius: 14px; background: rgba(255, 255, 255, .09); color: #fff; font-size: 14.5px; font-weight: 600; transition: background .2s; }
+.poste-pied a:hover, .poste-pied button:hover { background: rgba(255, 255, 255, .16); }
+.poste-pied svg { width: 20px; height: 20px; fill: currentColor; flex: none; }
+
+@media (prefers-reduced-motion: reduce) {
+  [data-direct="charge"] .aiguille, [data-direct="lecture"] .gros::after { animation: none; }
+}
+
+/* ---------- Notes de maquette (ne font pas partie de la page) ---------- */
+.notes { background: var(--blanc); }
+.notes .apercu { margin-top: 18px; padding: 22px 16px; border-radius: var(--rayon); background: #EFE7DD; display: flex; justify-content: flex-end; }
+.bulle { width: min(100%, 340px); background: #D9FDD3; border-radius: 12px 12px 2px 12px; padding: 4px; box-shadow: 0 1px 1px rgba(0, 0, 0, .12); font-size: 14.5px; line-height: 1.35; color: #111B21; }
+.bulle .fiche { background: #C8EFC1; border-radius: 9px; overflow: hidden; }
+.bulle .fiche img { width: 100%; aspect-ratio: 1200 / 630; object-fit: cover; }
+.bulle .fiche div { padding: 8px 10px 9px; }
+.bulle .fiche b { display: block; font-weight: 600; }
+.bulle .fiche span { display: block; color: #54656F; font-size: 13px; margin-top: 2px; }
+.bulle .fiche em { display: block; font-style: normal; color: #667781; font-size: 12px; margin-top: 4px; }
+.bulle p { padding: 6px 8px 4px; }
+.bulle p u { color: #027EB5; }
+.notes a.essai { color: var(--audace); text-decoration: underline; text-underline-offset: 3px; }
+.bulle time { display: block; text-align: right; padding: 0 8px 3px; font-size: 11px; color: #667781; }
+</style>
+</head>
+<body>
+
+<main class="poste" id="contenu">
+  <header class="poste-tete">
+    <a href="accueil.html" aria-label="Radio Audace 106.8 FM, accueil du site"><img src="assets/logo-radio-audace-simplifie.svg" alt="" width="122" height="30"></a>
+    <a class="site" href="accueil.html">Lire l'actualité ›</a>
+  </header>
+
+  <div class="poste-coeur">
+    <div class="cadran" aria-hidden="true">
+      <div class="mhz">106.8<small>FM</small></div>
+      <div class="echelle"><b class="aiguille"></b></div>
+    </div>
+
+    <div class="maintenant" aria-live="polite">
+      <span class="etiquette"><span class="pastille"></span><span data-label></span></span>
+      <h1 data-titre></h1>
+      <p class="detail" data-detail></p>
+    </div>
+
+    <div class="commande">
+      <button class="gros" type="button" data-direct-btn><span class="ico"></span><span class="sr libelle"></span></button>
+      <div class="ou" role="status">
+        <span class="onde" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+        <span data-ou></span>
+      </div>
+    </div>
+
+    <p class="apres" data-suite></p>
+  </div>
+
+  <footer class="poste-pied">
+    <a data-wa href="#" target="_blank" rel="noopener"></a>
+    <button type="button" data-copie></button>
+  </footer>
+</main>
+
+<section class="notes" id="notes">
+<div class="sommaire">
+  <h1>Note de maquette : la page « Écouter »</h1>
+  <p>Tout ce qui est au-dessus est la page elle-même ; cette note n'en fait pas partie. Adresse proposée : <strong>radioaudace.com/ecouter</strong>. C'est ce lien que l'on envoie.</p>
+
+  <h2>Ce que voit la personne qui reçoit le lien</h2>
+  <p>WhatsApp, Facebook et X affichent une fiche avec image, titre et description. Un appui ouvre le lecteur ci-dessus.</p>
+  <div class="apercu">
+    <div class="bulle">
+      <div class="fiche">
+        <img src="../radio-audace/assets/img/partage.png" alt="Fiche de partage : Radio Audace 106.8 FM, en direct de Douala" width="1200" height="630">
+        <div><b>Écouter Radio Audace 106.8 FM en direct</b><span>Le direct de Douala, où que vous soyez. Un appui et la radio joue.</span><em>radioaudace.com</em></div>
+      </div>
+      <p><u>https://www.radioaudace.com/ecouter</u></p>
+      <time>14:32</time>
+    </div>
+  </div>
+
+  <h2>Comment la page se comporte</h2>
+  <ul class="liste">
+    <li><strong>Un seul geste</strong> : le gros bouton lance le direct. Le son ne peut pas partir tout seul à l'ouverture, les téléphones l'interdisent ; il faut un appui.</li>
+    <li><strong>Elle dit ce qui passe vraiment</strong> : émission en ligne, titre musical ou simplement « Radio Audace », avec les mêmes données que le reste du site, rafraîchies chaque minute. À essayer : <a class="essai" href="?antenne=emission">émission</a>, <a class="essai" href="?antenne=musique">musique</a>, <a class="essai" href="?antenne=inconnu">aucune information</a>.</li>
+    <li><strong>Le cadran 106.8</strong> : l'aiguille cherche la station pendant la connexion, puis se fixe et s'allume quand le son joue.</li>
+    <li><strong>Écran verrouillé</strong> : le téléphone affiche « Radio Audace » et le titre en cours, avec lecture et pause, comme une application de musique.</li>
+    <li><strong>Page légère</strong> : ni en-tête, ni pied, ni articles ; elle s'ouvre vite, même sur une connexion lente.</li>
+    <li><strong>Faire suivre</strong> : deux boutons en bas, WhatsApp et copie du lien, pour que l'auditeur partage à son tour.</li>
+  </ul>
+
+  <h2>À décider</h2>
+  <ul class="liste">
+    <li><strong>La présentation</strong> : cette version sobre, ou la <a class="essai" href="ecouter-poste.html">version poste de radio</a>.</li>
+    <li><strong>L'adresse</strong> : /ecouter (proposé) ou /direct.</li>
+    <li><strong>La page « lecteur » actuelle</strong> (VMPlayer) : la rediriger vers cette page, ou la garder.</li>
+    <li><strong>L'image de la fiche</strong> : celle du site (ci-dessus), ou une image propre à cette page, avec un bouton de lecture bien visible.</li>
+  </ul>
+</div>
+</section>
+
+<script src="maquette.js"></script>
+<script>
+// Propre à cette page ; ANTENNE, I, $ et $$ viennent de maquette.js.
+const ADRESSE = 'https://www.radioaudace.com/ecouter';
+
+$('[data-label]').textContent = ANTENNE.label;
+$('[data-titre]').textContent = ANTENNE.titre;
+$('[data-detail]').textContent = ANTENNE.detail;
+const suite = $('[data-suite]'); suite.textContent = ANTENNE.desc; suite.hidden = !ANTENNE.desc || ANTENNE === CAS.emission;
+
+// Échelle du cadran : de 104,8 à 108,8 MHz, 106,8 au centre.
+const echelle = $('.echelle');
+for (let n = 0; n <= 20; n++) {
+  const f = Math.round((104.8 + n * 0.2) * 10) / 10, entier = Number.isInteger(f);
+  echelle.insertAdjacentHTML('afterbegin', `<i${entier ? ' class="fort"' : ''} style="left:${n * 5}%"></i>${entier ? `<span style="left:${n * 5}%">${f}</span>` : ''}`);
+}
+
+// Le texte sous le bouton suit l'état du lecteur.
+const OU = {
+  arret: 'Appuyez pour écouter',
+  charge: 'Connexion au direct…',
+  lecture: 'Vous écoutez le direct',
+  reprise: 'En pause, appuyez pour reprendre',
+  erreur: 'Direct indisponible, appuyez pour réessayer',
+};
+const suivre = () => {
+  const e = document.documentElement.dataset.direct;
+  $('[data-ou]').textContent = OU[e];
+  // Écran verrouillé et commandes du casque.
+  if ('mediaSession' in navigator && e === 'lecture') {
+    navigator.mediaSession.metadata = new MediaMetadata({ title: ANTENNE.titre, artist: 'Radio Audace 106.8 FM', album: ANTENNE.detail });
+  }
+};
+new MutationObserver(suivre).observe(document.documentElement, { attributes: true, attributeFilter: ['data-direct'] });
+suivre();
+
+// Faire suivre le lien.
+const wa = $('[data-wa]');
+wa.innerHTML = `${I.whatsapp}Envoyer`;
+wa.setAttribute('aria-label', 'Envoyer le lien sur WhatsApp');
+wa.href = 'https://wa.me/?text=' + encodeURIComponent('Écoutez Radio Audace 106.8 FM en direct : ' + ADRESSE);
+const copie = $('[data-copie]');
+const repos = `${I.lien}Copier le lien`;
+copie.innerHTML = repos;
+copie.addEventListener('click', async () => {
+  try { await navigator.clipboard.writeText(ADRESSE); } catch (e) { /* aperçu local */ }
+  copie.innerHTML = `${I.lien}Lien copié`;
+  setTimeout(() => { copie.innerHTML = repos; }, 2000);
+});
+</script>
+</body>
+</html>
