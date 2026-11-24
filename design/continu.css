@@ -1,0 +1,104 @@
+/* Maquette « Audace en continu » — complément de maquette.css, chargé seulement par accueil-continu.html.
+   Trois états, portés par <html data-fil="…"> :
+   - "off" : fonction désactivée, l'accueil est celui de accueil.html (disposition par défaut) ;
+   - "a"   : le fil en colonne à droite de la une, l'antenne en bandeau au-dessus (disposition recommandée) ;
+   - "b"   : l'antenne garde sa place à droite, un fil court en dessous.
+   Le rouge reste réservé au direct : le fil utilise l'encre et le bleu Audace. Aucun titre n'est cliquable. */
+
+/* ---------- Barre d'outils de la maquette (n'existe pas dans le thème) ---------- */
+.outil { margin: 12px max(var(--marge), calc((100% - var(--large)) / 2)) 0; padding: 10px 14px; border: 1.5px dashed #B9C2D0; border-radius: 14px; display: flex; flex-wrap: wrap; align-items: center; gap: 8px 10px; font-size: 13.5px; color: var(--doux); }
+.outil b { color: var(--encre); font-weight: 600; margin-right: 4px; }
+.outil a, .outil button { display: inline-flex; align-items: center; min-height: 36px; padding: 0 14px; border-radius: 999px; background: var(--papier); color: var(--encre); font: inherit; font-weight: 500; border: 0; cursor: pointer; }
+.outil a[aria-current="true"] { background: var(--encre); color: #fff; }
+.outil button { margin-left: auto; background: transparent; box-shadow: inset 0 0 0 1.5px var(--ligne); }
+.outil .sep { width: 1px; height: 22px; background: var(--ligne); margin: 0 6px; }
+.outil .note { width: 100%; font-size: 12.5px; }
+
+/* Prochaine émission : visible seulement dans le bandeau de la variante A, sur ordinateur. */
+.antenne .ensuite { display: none; }
+
+/* ---------- Le fil ---------- */
+.continu { display: none; background: var(--papier); border-radius: var(--rayon); padding: clamp(18px, 2vw, 26px) clamp(16px, 1.8vw, 24px) clamp(10px, 1.2vw, 16px); min-width: 0; }
+.continu-tete { display: flex; align-items: baseline; justify-content: space-between; gap: 12px; flex-wrap: wrap; padding-bottom: 14px; border-bottom: 1px solid var(--ligne); }
+.continu-tete h2 { font-family: var(--titre); font-weight: 700; font-size: clamp(20px, 1.9vw, 24px); letter-spacing: -.025em; color: var(--encre); line-height: 1.1; }
+.continu-tete .maj { font-size: 12.5px; color: var(--doux); font-variant-numeric: tabular-nums; }
+
+.fil { list-style: none; margin: 0; padding: 0; position: relative; }
+/* Frise : un trait vertical qui relie les heures. */
+.fil::before { content: ""; position: absolute; left: 58px; top: 22px; bottom: 22px; width: 1px; background: #D5DAE2; }
+.fil li { position: relative; display: grid; grid-template-columns: 46px minmax(0, 1fr); column-gap: 26px; padding: 14px 0; cursor: default; }
+.fil li + li { border-top: 1px solid var(--ligne); }
+.fil li::before { content: ""; position: absolute; left: 55px; top: 21px; width: 7px; height: 7px; border-radius: 50%; background: var(--audace); box-shadow: 0 0 0 4px var(--papier); }
+.fil time { font-family: var(--titre); font-weight: 700; font-size: 14.5px; color: var(--encre); font-variant-numeric: tabular-nums; line-height: 1.35; white-space: nowrap; }
+.fil .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.fil .rubrique { font-size: 11.5px; }
+.fil p { margin: 4px 0 0; font-size: 15.5px; line-height: 1.38; font-weight: 600; color: var(--encre); text-wrap: pretty; }
+
+/* Étiquettes : jamais de rouge (réservé au direct). */
+.fil .pastille-fil { display: inline-flex; align-items: center; height: 20px; padding: 0 7px; border-radius: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; }
+.fil .pastille-fil.urgent { background: var(--encre); color: #fff; }
+.fil .pastille-fil.rectificatif { color: var(--encre); box-shadow: inset 0 0 0 1.5px var(--encre); }
+.pastille-fil.epingle { display: inline-flex; align-items: center; height: 20px; padding: 0 7px; border-radius: 5px; font-size: 10.5px; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; color: var(--audace); background: rgba(30, 86, 232, .1); }
+
+/* Titre épinglé : un encart au-dessus de la frise, sans heure ni point, pour ne pas casser la chronologie. */
+.epingle-fil { margin-top: 14px; padding: 12px 14px; background: var(--blanc); border-radius: 12px; cursor: default; }
+.epingle-fil .meta { display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; }
+.epingle-fil .rubrique { font-size: 11.5px; }
+.epingle-fil p { margin: 4px 0 0; font-size: 15.5px; line-height: 1.38; font-weight: 600; color: var(--encre); text-wrap: pretty; }
+
+/* Séparateur de jour : un titre de la veille ne doit pas passer pour un titre du jour. */
+.fil li.jour { grid-template-columns: 1fr; padding: 9px 0 9px 72px; font-size: 11.5px; font-weight: 700; letter-spacing: .1em; text-transform: uppercase; color: var(--doux); background: var(--papier); }
+.fil li.jour::before { display: none; }
+
+/* Arrivée d'un nouveau titre : un surlignage bref, puis plus rien. */
+@keyframes arrivee { from { background: rgba(30, 86, 232, .14); } to { background: transparent; } }
+.fil li.nouveau { animation: arrivee 2.4s var(--doucement); }
+.fil li.nouveau::before { box-shadow: 0 0 0 4px var(--papier), 0 0 0 7px rgba(30, 86, 232, .22); }
+@media (prefers-reduced-motion: reduce) { .fil li.nouveau { animation: none; } }
+
+.continu .plus { display: block; width: 100%; min-height: 44px; margin-top: 4px; border: 0; background: transparent; color: var(--audace); font: inherit; font-size: 14.5px; font-weight: 600; cursor: pointer; }
+
+/* ---------- Fonction activée ---------- */
+html[data-fil="a"] .continu, html[data-fil="b"] .continu { display: block; }
+/* Titres visibles : 5 en colonne (A), 4 sous l'antenne (B), 3 sur téléphone ; le reste se déplie sur place. */
+html[data-fil="a"] .fil li:nth-child(n+6) { display: none; }
+html[data-fil="b"] .fil li:nth-child(n+5) { display: none; }
+html[data-fil] .continu.ouvert .fil li:nth-child(n) { display: grid; }
+
+@media (min-width: 761px) {
+  /* Variante A : antenne en bandeau sur toute la largeur, puis la une et le fil. */
+  html[data-fil="a"] .ouverture { grid-template-areas: "antenne antenne" "une fil"; align-items: start; }
+  html[data-fil="a"] .une { grid-area: une; }
+  html[data-fil="a"] .continu { grid-area: fil; }
+  html[data-fil="a"] .antenne { grid-area: antenne; flex-direction: row; flex-wrap: wrap; align-items: center; gap: 6px 22px; padding: 14px 22px; border-radius: 16px; }
+  html[data-fil="a"] .antenne .bloc { flex: 1; min-width: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 2px 16px; }
+  html[data-fil="a"] .antenne .etiquette { width: 100%; }
+  html[data-fil="a"] .antenne h2 { font-size: 22px; margin-top: 2px; }
+  html[data-fil="a"] .antenne .quoi { margin-top: 0; font-size: 14.5px; }
+  html[data-fil="a"] .antenne .commandes { margin-top: 0; }
+  html[data-fil="a"] .antenne .desc, html[data-fil="a"] .antenne .suite, html[data-fil="a"] .antenne .onde { display: none; }
+  html[data-fil="a"] .antenne .vers-grille { margin-top: 0; }
+  html[data-fil="a"] .antenne .ensuite { display: flex; flex-direction: column; gap: 2px; padding-left: 22px; border-left: 1px solid rgba(255, 255, 255, .16); font-size: 15.5px; line-height: 1.25; }
+  html[data-fil="a"] .antenne .ensuite span { font-size: 12px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: #8191AC; }
+  html[data-fil="a"] .antenne .ensuite b { font-weight: 600; }
+
+  /* Variante B : la une à gauche sur deux rangées ; à droite l'antenne raccourcie, puis le fil. */
+  html[data-fil="b"] .ouverture { grid-template-areas: "une antenne" "une fil"; grid-template-rows: auto 1fr; align-items: start; row-gap: 18px; }
+  html[data-fil="b"] .une { grid-area: une; }
+  html[data-fil="b"] .antenne { grid-area: antenne; }
+  html[data-fil="b"] .continu { grid-area: fil; }
+  html[data-fil="b"] .antenne .suite, html[data-fil="b"] .antenne .desc { display: none; }
+  html[data-fil="b"] .antenne .vers-grille { margin-top: 10px; }
+}
+
+/* ---------- Téléphone : antenne (déjà en bandeau), une, puis 3 titres dépliables sur place ---------- */
+@media (max-width: 760px) {
+  .outil button { margin-left: 0; }
+  .continu { border-radius: 16px; }
+  html[data-fil] .continu:not(.ouvert) .fil li:nth-child(n+4) { display: none; }
+  .epingle-fil p { font-size: 15px; }
+  .fil p { font-size: 15px; }
+}
+
+/* Entre 761 et 1000 px, le bandeau n'a plus la place pour la prochaine émission. */
+@media (min-width: 761px) and (max-width: 1000px) { html[data-fil="a"] .antenne .ensuite { display: none; } }
