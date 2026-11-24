@@ -34,10 +34,30 @@ $montres = $une ? array( $une->ID ) : array();
 // Les articles suivants, strictement par date.
 $decryptages = ra_articles( array( 'numberposts' => 6, 'post__not_in' => $montres ) );
 $montres     = array_merge( $montres, wp_list_pluck( $decryptages, 'ID' ) );
+
+// Fil « Audace en continu » : actif, l'ouverture passe à la disposition avec le fil ; sinon elle reste telle quelle.
+$fil = ra_continu();
 ?>
 
   <h1 class="sr"><?php echo esc_html( $station['nom'] . ' ' . $station['frequence'] . " — le direct et l'actualité du Cameroun" ); ?></h1>
 
+  <?php if ( $fil['active'] ) : ?>
+  <section class="ouverture cadre avec-fil" aria-label="À la une, à l'antenne et en continu">
+    <?php if ( $une ) : ?>
+    <a class="une" href="<?php echo esc_url( get_permalink( $une ) ); ?>">
+      <?php if ( has_post_thumbnail( $une ) ) : ?>
+        <figure class="vignette"><?php echo get_the_post_thumbnail( $une, 'ra-une', array( 'fetchpriority' => 'high', 'loading' => 'eager', 'sizes' => '(max-width: 760px) 100vw, 60vw' ) ); // phpcs:ignore WordPress.Security.EscapeOutput ?></figure>
+      <?php endif; ?>
+      <?php ra_surtitre( $une ); ?>
+      <h2 class="titre<?php echo ra_titre_en_capitales( ra_titre( $une ) ) ? ' capitales' : ''; ?>"><?php echo esc_html( ra_titre( $une ) ); ?></h2>
+      <p class="chapeau"><?php echo esc_html( ra_chapeau( $une ) ); ?></p>
+      <?php ra_date( $une ); ?>
+    </a>
+    <?php endif; ?>
+    <?php ra_bandeau_antenne_continu(); ?>
+    <?php ra_bloc_continu( $fil ); ?>
+  </section>
+  <?php else : ?>
   <section class="ouverture cadre" aria-label="À la une et à l'antenne">
     <?php if ( $une ) : ?>
     <a class="une" href="<?php echo esc_url( get_permalink( $une ) ); ?>">
@@ -52,6 +72,7 @@ $montres     = array_merge( $montres, wp_list_pluck( $decryptages, 'ID' ) );
     <?php endif; ?>
     <?php ra_bloc_antenne(); ?>
   </section>
+  <?php endif; ?>
 
   <?php if ( $decryptages ) : ?>
   <section class="section">

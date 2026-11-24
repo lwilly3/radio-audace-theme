@@ -6,6 +6,7 @@
  * 3. Navigation sans rechargement : une couche ajoutée, active seulement pendant l'écoute,
  *    pour que le son ne s'interrompe pas. Au moindre doute, on revient à une navigation normale.
  * 4. Tiroir du menu, recherche, carrousel, vidéo, partage, apparitions.
+ * 5. Fil « Audace en continu » : sur l'accueil, quand le bloc est présent, relu toutes les 90 secondes.
  *
  * Le site fonctionne sans ce script (liens, recherche, lecture des articles).
  */
@@ -214,6 +215,7 @@
     if (majProgression) majProgression();
 
     afficherAntenne(zone);
+    initialiserFil();
   }
   addEventListener('scroll', function () { if (majProgression) majProgression(); }, { passive: true });
 
@@ -254,6 +256,15 @@
       barre.hidden = !barre.hidden;
       loupe.setAttribute('aria-expanded', barre.hidden ? 'false' : 'true');
       if (!barre.hidden) $('input', barre).focus();
+      return;
+    }
+
+    var plus = cible.closest('[data-fil-plus]');
+    if (plus) {
+      var blocFil = plus.closest('[data-fil]');
+      var deplie = blocFil.classList.toggle('ouvert');
+      plus.setAttribute('aria-expanded', deplie ? 'true' : 'false');
+      plus.textContent = deplie ? 'Voir moins de titres' : 'Voir plus de titres';
       return;
     }
 
@@ -372,6 +383,148 @@
       var charge = JSON.stringify({ type: c.type || 'pageview', post_id: c.postId || 0, path: location.pathname.slice(0, 190), referer: location.hostname, terms: c.terms || '', results: c.results || 0 });
       if (navigator.sendBeacon) navigator.sendBeacon(c.endpoint, new Blob([charge], { type: 'application/json' }));
     } catch (e) { /* sans gravité */ }
+  }
+
+  /* ------------------------------------------------------------ Fil « Audace en continu » */
+
+  // Le bloc est écrit dans la page par le serveur (inc/continu.php), seulement quand le fil est actif.
+  // Ici : on relit le relais dès le chargement, puis toutes les 90 secondes. Règles :
+  // - on n'insère que les nouveaux titres, sans reconstruire la liste (sinon un lecteur d'écran relirait tout) ;
+  // - un titre retiré disparaît tout de suite ;
+  // - la disposition de la page ne change jamais sous les yeux du lecteur : si le fil est désactivé pendant
+  //   que la page est ouverte, le bloc garde ses titres et cesse de se rafraîchir ;
+  // - une seule minuterie à la fois : elle est arrêtée à chaque changement de page.
+  var PERIODE_FIL = 90000, minuterieFil = 0, jetonFil = 0;
+
+  function el(nom, classe, texte) {
+    var e = document.createElement(nom);
+    if (classe) e.className = classe;
+    if (texte !== undefined) e.textContent = texte;
+    return e;
+  }
+
+  function metaFil(t, epingle) {
+    var meta = el('div', 'meta');
+    if (epingle) meta.appendChild(el('span', 'pastille-fil epingle', 'Épinglé'));
+    if (t.etiquette === 'urgent') meta.appendChild(el('span', 'pastille-fil urgent', 'Urgent'));
+    else if (t.etiquette === 'rectificatif') meta.appendChild(el('span', 'pastille-fil rectificatif', 'Rectificatif'));
+    if (t.rubrique) meta.appendChild(el('span', 'rubrique ' + (t.classe || 'infos'), t.rubrique));
+    return meta;
+  }
+
+  // Signature de ce qui est affiché pour un titre : sert à savoir s'il a été corrigé depuis.
+  function empreinteFil(t) { return [t.titre, t.rubrique, t.etiquette, t.heure, t.jour].join('|'); }
+
+  function remplirTitre(li, t) {
+    li.textContent = '';
+    li.setAttribute('data-id', t.id);
+    li.setAttribute('data-jour', t.jour || '');
+    li.setAttribute('data-empreinte', empreinteFil(t));
+    var heure = el('time', '', t.heure);
+    if (t.iso) heure.setAttribute('datetime', t.iso);
+    var corps = el('div');
+    corps.appendChild(metaFil(t, false));
+    corps.appendChild(el('p', '', t.titre));
+    li.appendChild(heure);
+    li.appendChild(corps);
+  }
+
+  function majEpingle(bloc, t) {
+    var encart = $('[data-fil-epingle]', bloc);
+    if (!encart) return;
+    if (!t) { encart.hidden = true; encart.textContent = ''; encart.removeAttribute('data-id'); return; }
+    var empreinte = empreinteFil(t);
+    if (encart.getAttribute('data-id') === String(t.id) && encart.getAttribute('data-empreinte') === empreinte) return;
+    encart.textContent = '';
+    encart.appendChild(metaFil(t, true));
+    encart.appendChild(el('p', '', t.titre));
+    encart.setAttribute('data-id', t.id);
+    encart.setAttribute('data-empreinte', empreinte);
+    encart.hidden = false;
+  }
+
+  // Séparateurs de jour (« Hier ») : ajustés au plus juste, sans toucher aux titres.
+  function majJours(liste) {
+    $$('li.jour', liste).forEach(function (sep) {
+      var suivant = sep.nextElementSibling;
+      if (!suivant || suivant.classList.contains('jour')) sep.remove();
+    });
+    var precedent = '';
+    $$('li[data-id]', liste).forEach(function (li) {
+      var jour = li.getAttribute('data-jour') || '';
+      var avant = li.previousElementSibling;
+      var sep = avant && avant.classList.contains('jour') ? avant : null;
+      var utile = jour !== '' && jour !== precedent;
+      if (utile && !sep) liste.insertBefore(el('li', 'jour', jour), li);
+      else if (utile && sep.textContent !== jour) sep.textContent = jour;
+      else if (!utile && sep) sep.remove();
+      precedent = jour;
+    });
+  }
+
+  function majFil(bloc, fil, premiere) {
+    var liste = $('[data-fil-liste]', bloc);
+    if (!liste) return;
+    var voulus = {};
+    fil.titres.forEach(function (t) { voulus[t.id] = true; });
+
+    // Titres retirés ou sortis du fil.
+    $$('li[data-id]', liste).forEach(function (li) { if (!voulus[li.getAttribute('data-id')]) li.remove(); });
+
+    // Titres nouveaux ou corrigés, dans l'ordre du flux (du plus récent au plus ancien).
+    var repere = $('li[data-id]', liste);
+    fil.titres.forEach(function (t) {
+      var li = $('li[data-id="' + t.id + '"]', liste);
+      if (li) {
+        var connue = li.getAttribute('data-empreinte');
+        if (connue === null) li.setAttribute('data-empreinte', empreinteFil(t)); // Écrit par le serveur : on le prend tel quel.
+        else if (connue !== empreinteFil(t)) remplirTitre(li, t);
+        repere = li.nextElementSibling;
+        while (repere && repere.classList.contains('jour')) repere = repere.nextElementSibling;
+        return;
+      }
+      li = el('li');
+      remplirTitre(li, t);
+      if (!premiere) li.className = 'nouveau';
+      liste.insertBefore(li, repere || null);
+    });
+
+    majJours(liste);
+    majEpingle(bloc, fil.epingle);
+
+    var maj = $('[data-fil-maj]', bloc);
+    if (maj) { maj.hidden = !fil.dernier; if (fil.dernier) maj.textContent = 'Dernier titre à ' + fil.dernier; }
+    var plus = $('[data-fil-plus]', bloc);
+    if (plus) plus.hidden = fil.titres.length <= 3;
+  }
+
+  function lireFil(premiere) {
+    var bloc = $('[data-fil]');
+    if (!bloc || !cfg.continuUrl) return;
+    if (document.hidden && !premiere) return;
+    var jeton = jetonFil;
+    fetch(cfg.continuUrl, { credentials: 'omit', cache: 'no-store' })
+      .then(function (r) { return r.ok ? r.json() : null; })
+      .then(function (fil) {
+        if (jeton !== jetonFil || !fil || !Array.isArray(fil.titres) || !document.contains(bloc)) return;
+        if (!fil.enabled) { arreterFil(); return; } // Fil désactivé ou relais sans réponse : le bloc reste tel quel.
+        majFil(bloc, fil, premiere);
+      })
+      .catch(function () { /* relecture manquée : les titres affichés restent en place */ });
+  }
+
+  function arreterFil() {
+    if (minuterieFil) clearInterval(minuterieFil);
+    minuterieFil = 0;
+    jetonFil++;
+  }
+
+  // Appelé à chaque page affichée, y compris par la navigation sans rechargement.
+  function initialiserFil() {
+    arreterFil();
+    if (!$('[data-fil]') || !cfg.continuUrl) return;
+    lireFil(true);
+    minuterieFil = setInterval(function () { lireFil(false); }, PERIODE_FIL);
   }
 
   /* ------------------------------------------------------------ Démarrage */

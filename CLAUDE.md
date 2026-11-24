@@ -278,6 +278,16 @@ version sobre `design/ecouter.html` est gardée pour mémoire).
   à jour maintenant ». Page Facebook fournie par l'utilisateur :
   `https://www.facebook.com/radioaudace` (ajoutée dans la 0.2.3) ; compte X :
   `https://x.com/radio_audace` (0.2.4) ; le lien WhatsApp reste à fournir.
+- Fil « Audace en continu » (0.5.0, 2026-11-24) : `radio-audace/inc/continu.php`
+  (relais `radio-audace/v1/continu`, purge `radio-audace/v1/continu/purge`,
+  bloc et bandeau de l'antenne), second rendu de l'ouverture dans
+  `front-page.php` (classe `avec-fil`), rafraîchissement dans `theme.js`,
+  styles en fin de `theme.css`. Hors service tant que `RA_CONTINU_CLE` n'est
+  pas définie dans `wp-config.php` (`RA_CONTINU_API` pour viser une autre API,
+  par exemple depuis le staging). Vérifié sur une page statique seulement
+  (disposition ordinateur, ajout, correction, retrait, épingle) ; **pas encore
+  essayé dans WordPress ni sur téléphone**. Cadrage : dépôt RadioManager,
+  `docs/modules/social/specifications/CADRAGE_INFO_EN_CONTINU.md`.
 - Publier une release : la commande `./release.sh` est bloquée pour Claude
   par le contrôle de sécurité (création d'une surface publique) ; c'est
   l'utilisateur qui la lance (`! ./release.sh`).

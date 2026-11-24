@@ -61,6 +61,8 @@ add_action( 'wp_enqueue_scripts', function () {
         'flux'       => $station['flux'],
         'antenne'    => ra_antenne(),
         'antenneUrl' => rest_url( 'radio-audace/v1/antenne' ),
+        // Fil « Audace en continu » : adresse du relais, vide tant que la clé n'est pas posée (inc/continu.php).
+        'continuUrl' => '' !== ra_continu_cle() ? rest_url( 'radio-audace/v1/continu' ) : '',
         // Statistiques d'écoute : envoyées au plugin lecteur s'il est actif (même tableau de bord RadioManager).
         'stats'      => function_exists( 'rap_ajax_analytics' ) ? admin_url( 'admin-ajax.php' ) : '',
         'accueil'    => home_url( '/' ),

@@ -8,6 +8,13 @@ Chaque section `## [X.Y.Z]` sert de notes à la release GitHub du même numéro
 
 ## [Non publié]
 
+## [0.5.0] - 2026-11-24
+
+### Ajouté
+- Fil « Audace en continu » sur l'accueil : des titres d'information horodatés, saisis dans RadioManager (module Social, écran « Info en continu »). Quand le fil est actif, l'antenne passe en bandeau, la une reste à gauche et le fil s'affiche à droite (sous la une sur téléphone). Les titres se mettent à jour seuls toutes les 90 secondes ; un titre retiré disparaît aussitôt
+- Sans clé configurée, ou quand le fil est désactivé, vide ou trop ancien, l'accueil reste exactement celui d'avant
+- Mise en service : ajouter `define( 'RA_CONTINU_CLE', '…' );` dans `wp-config.php`, avec la même valeur que `SOCIAL_LIVE_FEED_SECRET` côté RadioManager
+
 ## [0.4.1] - 2026-11-24
 
 ### Corrigé

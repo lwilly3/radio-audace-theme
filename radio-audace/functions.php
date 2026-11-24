@@ -12,13 +12,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 // Version : toujours identique à l'en-tête de style.css (release.sh le vérifie).
-define( 'RADIO_AUDACE_THEME_VERSION', '0.4.1' );
+define( 'RADIO_AUDACE_THEME_VERSION', '0.5.0' );
 
 require get_template_directory() . '/inc/reglages.php';   // Supports, scripts, coordonnées de la station.
 require get_template_directory() . '/inc/familles.php';   // Rubriques, émissions, replays.
 require get_template_directory() . '/inc/contenu.php';    // Nettoyage du HTML reçu de RadioManager et de Divi.
 require get_template_directory() . '/inc/antenne.php';    // Ce qui passe à l'antenne, grille.
 require get_template_directory() . '/inc/gabarits.php';   // Fragments d'affichage partagés.
+require get_template_directory() . '/inc/continu.php';    // Fil « Audace en continu » : relais du flux RadioManager, bloc de l'accueil.
 require get_template_directory() . '/inc/partage.php';    // Fiche de partage (WhatsApp, Facebook, X) et icône du site.
 require get_template_directory() . '/inc/ecoute.php';     // Page « Écouter » (/ecouter) : le poste de radio à partager.
 require get_template_directory() . '/inc/miseajour.php';  // Mises à jour depuis les releases GitHub.
