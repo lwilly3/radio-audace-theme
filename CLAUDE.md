@@ -282,9 +282,10 @@ version sobre `design/ecouter.html` est gardée pour mémoire).
   (relais `radio-audace/v1/continu`, purge `radio-audace/v1/continu/purge`,
   bloc et bandeau de l'antenne), second rendu de l'ouverture dans
   `front-page.php` (classe `avec-fil`), rafraîchissement dans `theme.js`,
-  styles en fin de `theme.css`. Hors service tant que `RA_CONTINU_CLE` n'est
-  pas définie dans `wp-config.php` (`RA_CONTINU_API` pour viser une autre API,
-  par exemple depuis le staging). Vérifié sur une page statique seulement
+  styles en fin de `theme.css`. Hors service tant que la clé n'est pas posée : page
+  Réglages › Audace en continu depuis la 0.5.1 (options `ra_continu_cle` et
+  `ra_continu_api`), ou constantes `RA_CONTINU_CLE` / `RA_CONTINU_API` dans
+  `wp-config.php`, qui passent devant. Vérifié sur une page statique seulement
   (disposition ordinateur, ajout, correction, retrait, épingle) ; **pas encore
   essayé dans WordPress ni sur téléphone**. Cadrage : dépôt RadioManager,
   `docs/modules/social/specifications/CADRAGE_INFO_EN_CONTINU.md`.

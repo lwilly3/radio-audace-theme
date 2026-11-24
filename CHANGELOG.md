@@ -8,6 +8,11 @@ Chaque section `## [X.Y.Z]` sert de notes à la release GitHub du même numéro
 
 ## [Non publié]
 
+## [0.5.1] - 2026-11-24
+
+### Ajouté
+- Page Réglages › Audace en continu dans l'administration WordPress : la clé du fil se colle ici, sans ouvrir les fichiers du serveur. La page indique si la connexion à RadioManager réussit et si le fil est affiché sur l'accueil. La clé n'est jamais réaffichée
+
 ## [0.5.0] - 2026-11-24
 
 ### Ajouté
