@@ -8,6 +8,11 @@ Chaque section `## [X.Y.Z]` sert de notes à la release GitHub du même numéro
 
 ## [Non publié]
 
+## [0.4.1] - 2026-11-24
+
+### Corrigé
+- Le son ne s'interrompt plus d'une page à l'autre quand on est connecté à WordPress : la navigation sans rechargement était réservée aux visiteurs non connectés. La barre d'administration suit désormais la page affichée
+
 ## [0.4.0] - 2026-11-12
 
 ### Ajouté

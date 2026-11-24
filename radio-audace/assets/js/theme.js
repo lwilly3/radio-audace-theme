@@ -277,10 +277,10 @@
 
   /* ------------------------------------------------------------ Navigation sans rechargement */
 
-  // Active seulement pendant l'écoute, pour un visiteur non connecté. Sinon : navigation normale.
+  // Active seulement pendant l'écoute. Sinon : navigation normale.
   // La page « Écouter » est autonome (ni en-tête ni pied) : on y entre et on en sort par une navigation normale.
   function douce() {
-    return !!audio && !document.body.classList.contains('ecoute') && !document.getElementById('wpadminbar') && 'DOMParser' in window && !!history.pushState;
+    return !!audio && !document.body.classList.contains('ecoute') && 'DOMParser' in window && !!history.pushState;
   }
 
   function naviguerSiPossible(ev, cible) {
@@ -296,6 +296,29 @@
     if (url.pathname === location.pathname && url.search === location.search) return; // Simple ancre.
     ev.preventDefault();
     charger(url.href, true);
+  }
+
+  // Visiteur connecté : la barre d'administration suit la page (lien « Modifier »…). On la met à jour
+  // élément par élément, sans la reconstruire, pour que ses menus restent actifs.
+  function majBarreAdmin(doc) {
+    var nouvelle = doc.getElementById('wpadminbar');
+    if (!nouvelle || !document.getElementById('wpadminbar')) return;
+    var par = function (zone, id) { return zone.querySelector('[id="' + id + '"]'); };
+    ['wp-admin-bar-root-default', 'wp-admin-bar-top-secondary'].forEach(function (idListe) {
+      var liste = document.getElementById(idListe), listeN = par(nouvelle, idListe);
+      if (!liste || !listeN) return;
+      Array.prototype.forEach.call(liste.children, function (li) {
+        if (!li.id) return;
+        li.hidden = !par(listeN, li.id); // Élément absent de la nouvelle page (« Modifier l'article » sur une liste, par exemple).
+      });
+      $$('li[id] > a[href]', liste).forEach(function (a) {
+        var aN = nouvelle.querySelector('[id="' + a.parentNode.id + '"] > a[href]');
+        if (aN) a.setAttribute('href', aN.getAttribute('href'));
+      });
+      Array.prototype.forEach.call(listeN.children, function (liN) {
+        if (liN.id && !document.getElementById(liN.id)) liste.appendChild(document.importNode(liN, true));
+      });
+    });
   }
 
   var chargementEnCours = 0;
@@ -319,6 +342,7 @@
         document.body.className = doc.body.className;
         var menuN = doc.querySelector('.entete .menu'), menu = $('.entete .menu');
         if (menuN && menu) menu.innerHTML = menuN.innerHTML;
+        majBarreAdmin(doc);
         if (pousser) history.pushState({ ra: 1 }, '', rep.url);
         var ancre = rep.url.split('#')[1], cibleAncre = ancre ? document.getElementById(ancre) : null;
         if (cibleAncre) cibleAncre.scrollIntoView(); else scrollTo(0, 0);
