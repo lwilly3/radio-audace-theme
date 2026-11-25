@@ -285,9 +285,11 @@ version sobre `design/ecouter.html` est gardée pour mémoire).
   styles en fin de `theme.css`. Hors service tant que la clé n'est pas posée : page
   Réglages › Audace en continu depuis la 0.5.1 (options `ra_continu_cle` et
   `ra_continu_api`), ou constantes `RA_CONTINU_CLE` / `RA_CONTINU_API` dans
-  `wp-config.php`, qui passent devant. Vérifié sur une page statique seulement
-  (disposition ordinateur, ajout, correction, retrait, épingle) ; **pas encore
-  essayé dans WordPress ni sur téléphone**. Cadrage : dépôt RadioManager,
+  `wp-config.php`, qui passent devant. Fonctionnement détaillé (trajet d'un
+  titre, contrat entre le balisage PHP et JavaScript, vérification,
+  publication) : `docs/CONTINU.md`. **En production depuis le 2026-11-25**
+  (0.5.1), vu sur ordinateur avec de vrais titres ; **affichage téléphone non
+  vérifié**. Cadrage : dépôt RadioManager,
   `docs/modules/social/specifications/CADRAGE_INFO_EN_CONTINU.md`.
 - Publier une release : la commande `./release.sh` est bloquée pour Claude
   par le contrôle de sécurité (création d'une surface publique) ; c'est
